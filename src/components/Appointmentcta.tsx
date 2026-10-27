@@ -8,7 +8,7 @@ import { clinic, img } from '../data.ts';
 export default function AppointmentCTA({ title, text, onBook, image = img.reception }: { title: string; text: string; onBook: () => void; image?: string }) {
   const par = useParallax<HTMLDivElement>(0.1);
   return (
-    <section className="px-4 sm:px-6 lg:px-8 py-10 sm:py-14 bg-paper">
+    <section className="px-4 sm:px-6 lg:px-8 py-6 sm:py-8 bg-paper">
       <Reveal v="zoom">
         <div className="relative isolate overflow-hidden max-w-7xl mx-auto rounded-[2rem] sm:rounded-[2.75rem] bg-ink text-white px-6 py-16 sm:px-12 md:px-16 md:py-24">
           <div className="absolute inset-0 -z-20 overflow-hidden">

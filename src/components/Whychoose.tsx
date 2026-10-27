@@ -6,7 +6,7 @@ type P = { eyebrow?: string; title: string; text?: string; items: { i: string; t
 
 export default function WhyChoose({ eyebrow = 'Why choose us', title, text, items, onBook, dark }: P) {
   return (
-    <section id="approach" className={`py-10 lg:py-14 border-b border-forest/10 ${dark ? 'bg-forest text-ivory' : 'bg-white'}`}>
+    <section id="approach" className={`py-8 lg:py-10 border-b border-forest/10 ${dark ? 'bg-forest text-ivory' : 'bg-white'}`}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-5 gap-12 items-center">
         <Reveal className="lg:col-span-2 space-y-6">
           <p className={`text-xs font-semibold tracking-[0.25em] uppercase flex items-center gap-3 ${dark ? 'text-champagne' : 'text-forest'}`}><span className="w-8 h-px bg-current opacity-50" />{eyebrow}</p>

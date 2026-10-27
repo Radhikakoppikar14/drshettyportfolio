@@ -15,13 +15,13 @@ export default function ContactSection() {
     ['Clock', 'Opening hours', clinic.hours],
   ];
   return (
-    <section id="contact" className="py-16 sm:py-20 lg:py-24 bg-paper">
+    <section id="contact" className="py-10 sm:py-12 lg:py-16 bg-paper">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl">
           <Reveal><Eyebrow>Contact &amp; location</Eyebrow></Reveal>
           <Reveal delay={80}><h2 className="mt-5 text-4xl sm:text-5xl lg:text-[3.6rem] text-ink">Visit us in <span className="gt-light">HSR Layout.</span></h2></Reveal>
         </div>
-        <div className="mt-12 grid lg:grid-cols-12 gap-5">
+        <div className="mt-8 grid lg:grid-cols-12 gap-5">
           <Reveal v="left" className="lg:col-span-5">
             <div className="relative isolate overflow-hidden h-full rounded-[2rem] bg-ink text-white p-6 sm:p-9">
               <div className="aura -z-10 w-72 h-72 bg-teal/35 -right-20 -top-20" />

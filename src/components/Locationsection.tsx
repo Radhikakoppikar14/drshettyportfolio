@@ -2,7 +2,7 @@ import { locations, embedUrl, directionsUrl } from '../locations.ts';
 
 export default function LocationSection({ dark, accent }: { dark: string; accent: string }) {
   return (
-    <section id="location" className="max-w-6xl mx-auto px-5 py-16">
+    <section id="location" className="max-w-6xl mx-auto px-5 py-10">
       <h2 className="font-serif text-3xl md:text-4xl" style={{ color: dark }}>Find us</h2>
       <div className="mt-8 space-y-8">
         {locations.map((l) => (

@@ -22,7 +22,7 @@ type P = {
 export default function HeroSection({ eyebrow, tags, headline, sub, image, imageAlt = 'Svasti Heart and Dental Care clinic', cta1, cta2, side, meta }: P) {
   const bg = useParallax<HTMLDivElement>(0.12);
   return (
-    <section id="top" className="relative isolate overflow-hidden bg-ink text-white min-h-[100svh] lg:min-h-[96vh] flex">
+    <section id="top" className="relative isolate overflow-hidden bg-ink text-white min-h-[80svh] lg:min-h-[78vh] flex">
       {/* background photo with parallax */}
       <div className="absolute inset-0 -z-20 overflow-hidden" aria-hidden="false">
         <div ref={bg} className="absolute inset-x-0 -top-[10%] h-[120%] will-change-transform">
@@ -39,7 +39,7 @@ export default function HeroSection({ eyebrow, tags, headline, sub, image, image
       <div className="aura -z-10 w-[24rem] h-[24rem] bg-plum/40 bottom-[10%] left-[-8%]" style={{ animationDelay: '-11s' }} />
       <div className="absolute inset-0 -z-10 grid-lines" />
 
-      <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 pb-28 sm:pt-36 lg:pt-40 lg:pb-32 grid lg:grid-cols-12 gap-12 lg:gap-10 items-center">
+      <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16 sm:pt-28 lg:pt-28 lg:pb-20 grid lg:grid-cols-12 gap-12 lg:gap-10 items-center">
         <div className="lg:col-span-7">
           {(tags || eyebrow) && (
             <div className="hin d1 flex flex-wrap gap-2.5">

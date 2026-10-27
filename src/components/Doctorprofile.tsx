@@ -8,7 +8,7 @@ import type { Doctor } from '../data.ts';
 // Department doctor profile: large portrait on a colour backdrop, credentials as chips.
 export default function DoctorProfile({ doctor, onBook, tag }: { doctor: Doctor; onBook: () => void; tag?: string }) {
   return (
-    <section id="doctor" className="relative py-16 sm:py-20 lg:py-28 bg-paper overflow-hidden">
+    <section id="doctor" className="relative py-10 sm:py-12 lg:py-16 bg-paper overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
         <div className="lg:col-span-5 relative max-w-md mx-auto lg:max-w-none w-full">
           <Reveal v="zoom">

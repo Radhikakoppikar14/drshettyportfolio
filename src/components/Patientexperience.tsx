@@ -11,7 +11,7 @@ const COLORS = ['#0E9384', '#3BA7E5', '#E5484D'];
 export default function PatientExperience({ d, eyebrow = 'Our approach' }: { d: Dept; eyebrow?: string }) {
   const par = useParallax<HTMLDivElement>(0.08);
   return (
-    <section id="approach" className="relative py-16 sm:py-20 lg:py-28 bg-white overflow-hidden">
+    <section id="approach" className="relative py-10 sm:py-12 lg:py-16 bg-white overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
         <div className="lg:col-span-5 lg:order-2">
           <Reveal v="mask">

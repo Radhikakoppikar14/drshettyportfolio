@@ -3,7 +3,7 @@ import Reveal from './Reveal.tsx';
 
 export default function FAQ({ faqs }: { faqs: { q: string; a: string }[] }) {
   return (
-    <section id="faq" className="py-10 lg:py-14">
+    <section id="faq" className="py-8 lg:py-10">
       <div className="max-w-3xl mx-auto px-4 sm:px-6">
         <Reveal><h2 className="text-4xl sm:text-5xl text-forest text-center">Common questions</h2></Reveal>
         <div className="mt-10 space-y-4">

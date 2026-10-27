@@ -15,9 +15,9 @@ export default function Process({ steps, dark, accent }: { steps: string[]; dark
 
   return (
     <section className="text-white" style={{ background: dark }}>
-      <div className="max-w-6xl mx-auto px-6 py-12">
+      <div className="max-w-6xl mx-auto px-6 py-8">
         <h2 className="font-serif text-4xl md:text-5xl text-center">Your visit, step by step</h2>
-        <div ref={ref} className="relative mt-16">
+        <div ref={ref} className="relative mt-10">
           {/* desktop: horizontal line */}
           <div className="hidden lg:block absolute top-8 h-0.5 bg-white/20" style={{ left: edge, right: edge }}>
             <div className="h-full" style={{ background: accent, width: on ? '100%' : '0%', transition: `width ${total}ms linear` }} />

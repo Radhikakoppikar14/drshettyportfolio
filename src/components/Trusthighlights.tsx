@@ -15,7 +15,7 @@ export default function TrustHighlights({ items }: { items: { t: string; i: stri
       </li>
     ));
   return (
-    <section aria-label="Highlights" className="bg-paper pt-6 pb-10 sm:pb-14">
+    <section aria-label="Highlights" className="bg-paper pt-4 pb-6 sm:pb-8">
       <div className="marquee overflow-hidden">
         <ul className="marquee-track py-2">{row(false)}{row(true)}</ul>
       </div>

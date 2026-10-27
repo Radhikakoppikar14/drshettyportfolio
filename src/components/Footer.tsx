@@ -11,7 +11,7 @@ export default function Footer({ onBook }: { onBook?: () => void }) {
     <footer className="relative isolate overflow-hidden bg-ink text-white">
       <div className="aura -z-10 w-[30rem] h-[30rem] bg-teal/20 -left-40 -top-40" />
       <div className="aura -z-10 w-[26rem] h-[26rem] bg-coral/20 -right-32 top-10" style={{ animationDelay: '-9s' }} />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-12">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 pb-12 border-b border-white/10">
           <p className="font-display text-4xl sm:text-5xl lg:text-6xl font-semibold tracking-tight leading-[1.04] max-w-2xl">
             Caring for your heart.<br /><span className="gt">And your smile.</span>

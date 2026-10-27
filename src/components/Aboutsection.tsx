@@ -25,7 +25,7 @@ const BENEFIT_ICONS = ['UserRound', 'MessageCircle', 'ShieldCheck'];
 export default function AboutSection({ eyebrow = 'About us', title, text, benefits, image, image2, alt, alt2 = '', stat, onApproach, ctaLabel = 'Our Approach' }: P) {
   const par = useParallax<HTMLDivElement>(0.08);
   return (
-    <section id="about" className="relative py-16 sm:py-20 lg:py-28 bg-paper overflow-hidden">
+    <section id="about" className="relative py-10 sm:py-12 lg:py-16 bg-paper overflow-hidden">
       <div className="aura w-[30rem] h-[30rem] bg-[var(--acc-soft)] -left-40 top-10 opacity-90" />
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
         <div className="lg:col-span-6 relative pb-10 sm:pb-14 pr-6 sm:pr-14">
