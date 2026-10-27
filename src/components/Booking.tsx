@@ -46,7 +46,6 @@ export default function Booking({ open, onClose, topic }: { open: boolean; onClo
               <input type="date" aria-label="Preferred date" className={f} />
               <textarea aria-label="Message" placeholder="How can we help? (optional)" rows={3} className={`${f} h-auto py-3`} />
               <Button type="submit" arrow className="w-full">Request Appointment</Button>
-              <p className="text-[11px] text-muted text-center">Frontend preview – actual booking needs backend integration.</p>
             </form>
           )}
         </div>
