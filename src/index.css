@@ -1,0 +1,144 @@
+/* Typography follows the reference (vCurate): Outfit for display headings, Poppins for body/UI. */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  /* core palette */
+  --color-ink: #0F2230;        /* deep navy: hero, dark sections, footer */
+  --color-ink-2: #173447;
+  --color-ink-3: #22465D;
+  --color-paper: #F7F5F1;      /* warm off-white page background */
+  --color-cream: #EFEBE4;
+  --color-line: #E3DED6;
+  --color-text: #1B2A35;
+  --color-muted: #586672;
+  --color-muted-d: #A7B6C2;    /* muted text on dark */
+
+  /* care identities */
+  --color-teal: #0E9384;       /* dental */
+  --color-teal-ink: #0A7468;   /* dental text on light (AA) */
+  --color-teal-soft: #E3F4F1;
+  --color-sky: #3BA7E5;
+  --color-coral: #E5484D;      /* heart */
+  --color-coral-ink: #BE3038;  /* heart text on light (AA) */
+  --color-coral-soft: #FCEDEC;
+  --color-plum: #7A2950;       /* existing brand colour */
+  --color-sun: #F5B53D;
+
+  /* legacy tokens (kept so older/unused components still render) */
+  --color-ivory: #F7F5F1;
+  --color-forest: #0F2230;
+  --color-forest-dark: #0A1822;
+  --color-sage: #A7D8D0;
+  --color-champagne: #F5B53D;
+  --color-charcoal: #1B2A35;
+  --color-warm: #586672;
+
+  --font-display: "Outfit", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Poppins", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Outfit", ui-sans-serif, system-ui, sans-serif;
+
+  --ease-out-soft: cubic-bezier(.2, .7, .2, 1);
+}
+
+:root {
+  --ease: cubic-bezier(.2, .7, .2, 1);
+  /* gradient for buttons (dark enough for white text) and gradient for text on dark */
+  --grad-btn: linear-gradient(100deg, #0B7F74 0%, #2563A8 35%, #7E3373 68%, #C73A43 100%);
+  --grad-text: linear-gradient(95deg, #5EE0CF 0%, #7CC4FF 35%, #E39BD8 65%, #FF8A7A 100%);
+  --grad-text-light: linear-gradient(95deg, #0A7468 0%, #2563A8 40%, #7E3373 70%, #BE3038 100%);
+  /* page accent (overridden per page) */
+  --acc: #0E9384; --acc-ink: #0A7468; --acc-soft: #E3F4F1; --acc-2: #E5484D;
+}
+.theme-home   { --acc: #0E9384; --acc-ink: #0A7468; --acc-soft: #E3F4F1; --acc-2: #E5484D; }
+.theme-dental { --acc: #0E9384; --acc-ink: #0A7468; --acc-soft: #E3F4F1; --acc-2: #3BA7E5; }
+.theme-heart  { --acc: #E5484D; --acc-ink: #BE3038; --acc-soft: #FCEDEC; --acc-2: #F5A25B; }
+
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font-sans); background: var(--color-paper); color: var(--color-text);
+  overflow-x: hidden; -webkit-font-smoothing: antialiased; line-height: 1.65;
+}
+h1, h2, h3, h4, .font-serif, .font-display {
+  font-family: var(--font-display); font-weight: 600; letter-spacing: -0.025em; line-height: 1.06;
+}
+::selection { background: #0E938433; }
+
+/* accent helpers driven by the page theme */
+.t-acc { color: var(--acc-ink); }
+.t-acc-raw { color: var(--acc); }
+.bg-acc { background: var(--acc); }
+.bg-acc-soft { background: var(--acc-soft); }
+
+/* gradient text + gradient button */
+.gt { background: var(--grad-text); -webkit-background-clip: text; background-clip: text; color: transparent; padding-right: .04em; }
+.gt-light { background: var(--grad-text-light); -webkit-background-clip: text; background-clip: text; color: transparent; padding-right: .04em; }
+.btn-grad { background: var(--grad-btn); background-size: 170% 100%; background-position: 0 0; transition: background-position .6s var(--ease), transform .35s var(--ease), box-shadow .35s var(--ease); }
+.btn-grad:hover { background-position: 100% 0; }
+
+/* ---------- hero entrance (staggered) ---------- */
+.hin { animation: heroIn .95s var(--ease) both; }
+.hin.d1 { animation-delay: .08s } .hin.d2 { animation-delay: .18s } .hin.d3 { animation-delay: .28s }
+.hin.d4 { animation-delay: .38s } .hin.d5 { animation-delay: .5s }  .hin.d6 { animation-delay: .62s }
+@keyframes heroIn { from { opacity: .01; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+.hero-zoom { animation: heroZoom 2.2s var(--ease) both; }
+@keyframes heroZoom { from { transform: scale(1.12); opacity: .4; } to { transform: scale(1); opacity: 1; } }
+
+/* ---------- scroll reveal ---------- */
+.rv { opacity: 0; transition: opacity 1s var(--ease), transform 1s var(--ease), clip-path 1.2s var(--ease); will-change: opacity, transform; }
+.rv[data-v="up"] { transform: translateY(36px); }
+.rv[data-v="left"] { transform: translateX(-44px); }
+.rv[data-v="right"] { transform: translateX(44px); }
+.rv[data-v="zoom"] { transform: scale(.94); }
+.rv[data-v="mask"] { opacity: 1; clip-path: inset(14% 10% 14% 10% round 2.5rem); transform: scale(1.04); }
+.rv.in { opacity: 1; transform: none; }
+.rv.in[data-v="mask"] { clip-path: inset(0 0 0 0 round 0); }
+
+/* ---------- ambient motion ---------- */
+.aura { position: absolute; border-radius: 9999px; filter: blur(70px); pointer-events: none; animation: drift 18s ease-in-out infinite alternate; }
+@keyframes drift { 0% { transform: translate3d(0,0,0) scale(1); } 50% { transform: translate3d(-4%,4%,0) scale(1.06); } 100% { transform: translate3d(4%,-3%,0) scale(.96); } }
+.bob { animation: bob 6s ease-in-out infinite; }
+.bob-slow { animation: bob 8s ease-in-out infinite; animation-delay: -3s; }
+@keyframes bob { 50% { transform: translateY(-12px); } }
+.grid-lines {
+  background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+  background-size: 88px 88px;
+  -webkit-mask-image: radial-gradient(ellipse at 70% 40%, #000 0%, transparent 70%); mask-image: radial-gradient(ellipse at 70% 40%, #000 0%, transparent 70%);
+}
+.pulse-dot { animation: pulseDot 2.2s ease-in-out infinite; }
+@keyframes pulseDot { 0%,100% { box-shadow: 0 0 0 0 rgba(255,255,255,.45); } 50% { box-shadow: 0 0 0 7px rgba(255,255,255,0); } }
+.scroll-cue span { animation: cue 1.8s var(--ease) infinite; }
+@keyframes cue { 0% { transform: translateY(-6px); opacity: 0; } 40% { opacity: 1; } 100% { transform: translateY(10px); opacity: 0; } }
+
+/* ---------- marquee ---------- */
+.marquee { -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.marquee-track { display: flex; width: max-content; animation: marq 42s linear infinite; }
+.marquee:hover .marquee-track { animation-play-state: paused; }
+@keyframes marq { to { transform: translateX(-50%); } }
+
+/* ---------- cards + links ---------- */
+.lift { transition: transform .5s var(--ease), box-shadow .5s var(--ease); }
+.lift:hover { transform: translateY(-8px); box-shadow: 0 30px 60px -30px rgba(15,34,48,.35); }
+.zoom-img img, .zoom-img [role="img"] { transition: transform 1.2s var(--ease); }
+.zoom-img:hover img, .zoom-img:hover [role="img"] { transform: scale(1.06); }
+.glow { position: relative; overflow: hidden; }
+.glow::after { content: ""; position: absolute; width: 360px; height: 360px; right: -170px; bottom: -190px; border-radius: 50%; background: radial-gradient(closest-side, var(--c, #E5484D), transparent); opacity: .22; transition: opacity .5s, transform .7s var(--ease); pointer-events: none; }
+.glow:hover::after { opacity: .38; transform: scale(1.2); }
+.glow > .relative { z-index: 1; }
+.link-u { background-image: linear-gradient(currentColor, currentColor); background-size: 0% 1.5px; background-repeat: no-repeat; background-position: 0 100%; transition: background-size .4s var(--ease); }
+.link-u:hover, .link-u:focus-visible { background-size: 100% 1.5px; }
+
+/* ---------- modal ---------- */
+.fade-in { animation: fadeIn .3s ease both; }
+.pop-in { animation: popIn .45s var(--ease) both; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes popIn { from { opacity: 0; transform: translateY(18px) scale(.97); } to { opacity: 1; transform: none; } }
+
+/* ---------- reduced motion: everything visible, nothing moving ---------- */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+  .rv, .rv[data-v] { opacity: 1 !important; transform: none !important; clip-path: none !important; }
+  .marquee-track { flex-wrap: wrap; width: auto; justify-content: center; }
+  .marquee-dup { display: none; }
+}
