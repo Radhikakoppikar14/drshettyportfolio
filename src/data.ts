@@ -2,7 +2,8 @@ import { primary, directionsUrl } from './locations.ts';
 
 // ONE place for all clinic content and images. Replace the image links with the clinic's own photos
 // (save them in /public/images and use e.g. '/images/clinic.jpg').
-const u = (id: string, w = 1200) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80`;
+// Stock photos are requested at HD size (w=1800, q=85); Img adds a responsive srcset on top.
+const u = (id: string, w = 1800) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=85`;
 // Real clinic photos: save them in /public/images with these file names. Until a file exists,
 // the stock photo after the "|" is shown automatically.
 const L = (file: string, stock: string) => `/images/${file}|${stock}`;
@@ -23,6 +24,11 @@ export const clinic = {
 const doctorHeartImg = '/images/doctor-sreekanth.jpg|/images/clinic-front.jpg';
 const doctorDentalImg = '/images/doctor-chitra.jpg|/images/clinic-front.jpg';
 
+// Booking / inquiry form delivery. Leave '' to let the visitor send the request by email (prefilled with
+// department, treatment, name, phone, date and message). To receive requests directly, put the URL of a form
+// service or your own API here: the form then POSTs the same fields as JSON.
+export const bookingEndpoint = '';
+
 export const img = {
   clinic: L('clinic-front.jpg', u('photo-1629909613654-28e377c37b09')),
   building: L('clinic-building.jpg', u('photo-1629909613654-28e377c37b09')),
@@ -31,11 +37,11 @@ export const img = {
   heartRoom: L('heart-echo.jpg', u('photo-1588776814546-1ffcf47267a5')),
   smile: L('dental-room.jpg', u('photo-1606811841689-23dfddce3e95')),
   consult: L('consultation.jpg', u('photo-1588776814546-1ffcf47267a5')),
-  whitening: L('dental-1.jpg', u('photo-1598256989800-fe5f95da9787', 800)),
-  restorative: L('dental-2.jpg', u('photo-1609840114035-3c981b782dfe', 800)),
-  cosmetic: L('dental-3.jpg', u('photo-1576091160399-112ba8d25d1d', 800)),
+  whitening: L('dental-1.jpg', u('photo-1598256989800-fe5f95da9787', 1200)),
+  restorative: L('dental-2.jpg', u('photo-1609840114035-3c981b782dfe', 1200)),
+  cosmetic: L('dental-3.jpg', u('photo-1576091160399-112ba8d25d1d', 1200)),
   heart: L('heart-room.jpg', u('photo-1579684385127-1ef15d508118')),
-  heartB: L('heart-1.jpg', u('photo-1576091160399-112ba8d25d1d', 800)),
+  heartB: L('heart-1.jpg', u('photo-1576091160399-112ba8d25d1d', 1200)),
   doctorHeart: doctorHeartImg,
   doctorDental: doctorDentalImg,
 };
@@ -48,6 +54,8 @@ export type Doctor = {
   bio: string;
   points: string[];
   image: string;
+  // Optional focus point of the photo inside its frame (CSS object-position), e.g. '50% 0%' = keep the top of the head.
+  imgPos?: string;
 };
 
 export type Dept = {
@@ -114,6 +122,7 @@ export const dental: Dept = {
       'Focus on comfort and long-term oral health',
     ],
     image: img.doctorDental,
+    imgPos: '50% 0%',
   },
   expTitle: 'Your Comfort Comes First.',
   expText: 'From your first consultation to your ongoing care, every detail should help you feel informed, comfortable, and confident.',

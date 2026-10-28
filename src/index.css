@@ -95,6 +95,7 @@ h1, h2, h3, h4, .font-serif, .font-display {
 .rv.in[data-v="mask"] { clip-path: inset(0 0 0 0 round 0); }
 
 /* ---------- ambient motion ---------- */
+.aura-acc { background: var(--acc); opacity: .22; }
 .aura { position: absolute; border-radius: 9999px; filter: blur(70px); pointer-events: none; animation: drift 18s ease-in-out infinite alternate; }
 @keyframes drift { 0% { transform: translate3d(0,0,0) scale(1); } 50% { transform: translate3d(-4%,4%,0) scale(1.06); } 100% { transform: translate3d(4%,-3%,0) scale(.96); } }
 .bob { animation: bob 6s ease-in-out infinite; }

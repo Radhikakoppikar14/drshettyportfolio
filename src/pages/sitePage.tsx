@@ -10,6 +10,7 @@ import HeroSection, { HeroMeta } from '../components/Herosection.tsx';
 import Img from '../components/Img.tsx';
 import MobileBar from '../components/MobileBar.tsx';
 import PatientExperience from '../components/Patientexperience.tsx';
+import Statement from '../components/Statement.tsx';
 import TreatmentsSection from '../components/Treatmentssection.tsx';
 import TrustHighlights from '../components/Trusthighlights.tsx';
 import { clinic, img, type Dept } from '../data.ts';
@@ -20,8 +21,8 @@ const DoctorHeroCard = ({ d }: { d: Dept }) => {
   const c = d.key === 'heart' ? '#E5484D' : '#0E9384';
   return (
     <div className="relative max-w-sm mx-auto lg:max-w-none lg:ml-8">
-      <div className="relative overflow-hidden rounded-[2rem] sm:rounded-[2.5rem] aspect-[4/5] ring-1 ring-white/15 shadow-[0_40px_80px_-40px_rgba(0,0,0,.8)]">
-        <Img src={d.doctor.image} alt={`${d.doctor.name}, ${d.doctor.role}`} eager className="w-full h-full object-[50%_18%]" />
+      <div className="relative overflow-hidden rounded-[2rem] sm:rounded-[2.5rem] aspect-[4/5] ring-1 ring-white/15 shadow-[0_40px_80px_-40px_rgba(0,0,0,.8)] bg-white">
+        <Img src={d.doctor.image} alt={`${d.doctor.name}, ${d.doctor.role}`} eager zoom={1} pos={d.doctor.imgPos} className="w-full h-full object-[50%_18%]" />
         <div className="absolute inset-0 bg-gradient-to-t from-ink/85 via-transparent to-transparent" />
         <span className="absolute inset-x-0 top-0 h-1" style={{ background: c }} />
         <div className="absolute left-5 right-5 bottom-5">
@@ -74,13 +75,14 @@ export default function SitePage({ d }: { d: Dept }) {
           stat={{ v: d.doctor.exp.replace(/ years? of experience/i, '').replace(/^About /i, '~'), l: `years of experience · ${d.doctor.name}` }}
           onApproach={() => scrollToId('approach')}
         />
-        <TreatmentsSection d={d} onLearn={(t) => book(t)} />
+        <TreatmentsSection d={d} onLearn={(t: string) => book(t)} />
         <DoctorProfile doctor={d.doctor} onBook={() => book()} />
         <PatientExperience d={d} />
-        <AppointmentCTA title={d.ctaTitle} text={d.ctaText} onBook={() => book()} image={isHeart ? img.consult : img.reception} />
+        <Statement lines={isHeart ? ['Caring for your heart.', 'At every step.'] : ['Caring for your smile.', 'At every step.']} />
+        <AppointmentCTA title={d.ctaTitle} text={d.ctaText} onBook={() => book()} image={isHeart ? img.consult : img.reception} dept={d.key} />
         <ContactSection />
       </main>
-      <Footer onBook={() => book()} />
+      <Footer view={d.key} />
       <MobileBar onBook={() => book()} />
       <Booking open={open} onClose={() => setOpen(false)} topic={topic} />
     </div>

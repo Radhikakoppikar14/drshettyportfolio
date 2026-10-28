@@ -15,8 +15,8 @@ export default function DoctorProfile({ doctor, onBook, tag }: { doctor: Doctor;
             <div className="relative">
               <div className="absolute inset-0 translate-x-4 translate-y-4 sm:translate-x-6 sm:translate-y-6 rounded-[2.5rem] bg-acc opacity-90" aria-hidden="true" />
               <div className="absolute -top-6 -left-6 w-28 h-28 rounded-full border-2 border-dashed border-[var(--acc)] opacity-40" aria-hidden="true" />
-              <div className="relative overflow-hidden rounded-[2.5rem] aspect-[4/5] bg-cream zoom-img">
-                <Img src={doctor.image} alt={`${doctor.name}, ${doctor.role}`} className="w-full h-full object-[50%_18%]" />
+              <div className="relative overflow-hidden rounded-[2.5rem] aspect-[4/5] bg-white zoom-img">
+                <Img src={doctor.image} alt={`${doctor.name}, ${doctor.role}`} zoom={1} pos={doctor.imgPos} className="w-full h-full object-[50%_18%]" />
               </div>
               <div className="bob absolute -bottom-5 left-5 sm:left-8 rounded-2xl bg-white px-5 py-3.5 shadow-[0_24px_50px_-24px_rgba(15,34,48,.5)]">
                 <p className="text-[11px] uppercase tracking-[0.16em] text-muted">Experience</p>

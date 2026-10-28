@@ -32,9 +32,8 @@ export default function PatientExperience({ d, eyebrow = 'Our approach' }: { d: 
               <Reveal key={e.t} delay={150 + n * 110} className="h-full">
                 <div className="group lift h-full rounded-[1.5rem] bg-paper ring-1 ring-line p-6 relative overflow-hidden">
                   <span className="absolute inset-x-0 top-0 h-1" style={{ background: COLORS[n % 3] }} aria-hidden="true" />
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center">
                     <span className="w-12 h-12 rounded-2xl flex items-center justify-center text-white transition-transform duration-500 group-hover:rotate-[-6deg] group-hover:scale-110" style={{ background: COLORS[n % 3] }}><Icon name={e.i} /></span>
-                    <span className="font-display text-3xl font-semibold text-line">{String(n + 1).padStart(2, '0')}</span>
                   </div>
                   <h3 className="mt-6 text-xl text-ink">{e.t}</h3>
                   <p className="mt-2 text-sm text-muted leading-relaxed">{e.d}</p>

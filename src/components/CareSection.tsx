@@ -11,14 +11,14 @@ import { hrefFor } from '../router.ts';
 // Home page: one large, image-led panel per speciality. Dental = light & teal, Heart = dark & coral.
 const LOOK = {
   dental: {
-    id: 'dental-care', n: '01', icon: 'Smile', dark: false,
+    id: 'dental-care', icon: 'Smile', dark: false,
     section: 'bg-teal-soft', title: 'text-ink', text: 'text-muted', acc: 'text-teal-ink',
     colors: ['#0E9384', '#3BA7E5', '#14B8A6', '#2563A8'],
     aura: ['bg-teal/25', 'bg-sky/25'],
     blurb: 'Gentle, modern dentistry for every age, from routine check-ups to restoring a confident smile.',
   },
   heart: {
-    id: 'heart-care', n: '02', icon: 'HeartPulse', dark: true,
+    id: 'heart-care', icon: 'HeartPulse', dark: true,
     section: 'bg-ink', title: 'text-white', text: 'text-muted-d', acc: 'text-coral',
     colors: ['#E5484D', '#F5A25B', '#E73D87', '#F5B53D'],
     aura: ['bg-coral/30', 'bg-plum/40'],
@@ -53,7 +53,7 @@ export default function CareSection({ d, onBook, flip = false }: { d: Dept; onBo
             {/* doctor chip */}
             <Reveal v="up" delay={300} className={`absolute -bottom-6 ${flip ? 'right-4 sm:-right-4' : 'left-4 sm:-left-4'}`}>
               <a href={hrefFor(d.key)} className="bob-slow flex items-center gap-3 rounded-2xl bg-white pl-2 pr-5 py-2 shadow-[0_24px_50px_-20px_rgba(15,34,48,.5)] hover:-translate-y-1 transition-transform">
-                <span className="w-12 h-12 rounded-xl overflow-hidden bg-cream shrink-0"><Img src={d.doctor.image} alt="" className="w-full h-full object-[50%_20%]" /></span>
+                <span className="w-12 h-12 rounded-xl overflow-hidden bg-cream shrink-0"><Img src={d.doctor.image} alt="" zoom={1} className="w-full h-full object-[50%_20%]" /></span>
                 <span>
                   <span className="block font-display text-[15px] font-semibold text-ink leading-tight">{d.doctor.name}</span>
                   <span className="block text-[12px] text-muted">{d.doctor.role}</span>
@@ -64,7 +64,7 @@ export default function CareSection({ d, onBook, flip = false }: { d: Dept; onBo
 
           {/* text */}
           <div className={`lg:col-span-6 pt-6 lg:pt-0 ${flip ? 'lg:order-1' : ''}`}>
-            <Reveal><Eyebrow light={L.dark}>{L.n} — {d.label}</Eyebrow></Reveal>
+            <Reveal><Eyebrow light={L.dark}>{d.label}</Eyebrow></Reveal>
             <Reveal delay={80}>
               <h2 className={`mt-5 text-4xl sm:text-5xl lg:text-[3.75rem] ${L.title}`}>
                 {d.headline[0]}<br /><span className={L.dark ? 'gt' : 'gt-light'}>{d.headline[1]}</span>

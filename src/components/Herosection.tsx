@@ -46,7 +46,7 @@ export default function HeroSection({ eyebrow, tags, headline, sub, image, image
               {eyebrow && !tags && <span className="inline-flex items-center gap-2 h-9 px-4 rounded-full bg-white/[0.07] ring-1 ring-inset ring-white/15 text-[11px] sm:text-[12px] font-medium uppercase tracking-[0.16em]">{eyebrow}</span>}
               {tags?.map((t) => (
                 <span key={t.t} className="inline-flex items-center gap-2 h-9 px-4 rounded-full bg-white/[0.07] ring-1 ring-inset ring-white/15 backdrop-blur-sm text-[11px] sm:text-[12px] font-medium uppercase tracking-[0.16em]">
-                  <i className="w-2 h-2 rounded-full" style={{ background: t.c }} />{t.t}
+                  <i className="w-2 h-2 rounded-full" style={{ background: t.c }} aria-hidden="true" />{t.t}
                 </span>
               ))}
             </div>

@@ -8,15 +8,19 @@ import { scrollToId } from '../scroll.ts';
 
 export type View = Route;
 
-type Item = { label: string; route?: Route; section?: string };
+type Item = { label: string; route?: Route; section?: string; children?: { label: string; route: Route; hint: string; icon: string }[] };
 
 // Same navigation on every page: routes for the three websites, sections for the current page.
 const ITEMS: Item[] = [
   { label: 'Home', route: 'home' },
-  { label: 'Dental Care', route: 'dental' },
-  { label: 'Heart Care', route: 'heart' },
   { label: 'About Us', section: 'about' },
-  { label: 'Services', section: 'services' },
+  {
+    label: 'Services', section: 'services',
+    children: [
+      { label: 'Dental Care', route: 'dental', hint: 'Check-ups, crowns, RCT, braces & TMJ', icon: 'Smile' },
+      { label: 'Heart Care', route: 'heart', hint: 'Consultation, angioplasty, devices', icon: 'HeartPulse' },
+    ],
+  },
   { label: 'Contact', section: 'contact' },
 ];
 const SECTIONS = ITEMS.filter((i) => i.section).map((i) => i.section!) as string[];
@@ -28,6 +32,9 @@ export default function Header({ view, onBook }: { view: View; onBook: () => voi
   const prog = useRef<HTMLDivElement>(null);
   const closeBtn = useRef<HTMLButtonElement>(null);
   const burger = useRef<HTMLButtonElement>(null);
+  const [menu, setMenu] = useState(false); // desktop "Services" dropdown
+  const menuWrap = useRef<HTMLDivElement>(null);
+  const hoverT = useRef<number>(0);
 
   // solid header + progress bar (one rAF per frame)
   useEffect(() => {
@@ -59,6 +66,19 @@ export default function Header({ view, onBook }: { view: View; onBook: () => voi
     return () => { io.disconnect(); window.removeEventListener('scroll', top); };
   }, [view]);
 
+  // services dropdown: close on outside click / Escape / route change
+  useEffect(() => {
+    if (!menu) return;
+    const down = (e: MouseEvent) => { if (!menuWrap.current?.contains(e.target as Node)) setMenu(false); };
+    const key = (e: KeyboardEvent) => { if (e.key === 'Escape') setMenu(false); };
+    document.addEventListener('mousedown', down);
+    window.addEventListener('keydown', key);
+    return () => { document.removeEventListener('mousedown', down); window.removeEventListener('keydown', key); };
+  }, [menu]);
+  useEffect(() => setMenu(false), [view]);
+  const hoverOpen = () => { window.clearTimeout(hoverT.current); setMenu(true); };
+  const hoverClose = () => { window.clearTimeout(hoverT.current); hoverT.current = window.setTimeout(() => setMenu(false), 140); };
+
   // mobile menu: lock scroll, Escape closes, focus management
   useEffect(() => {
     if (!open) return;
@@ -71,6 +91,7 @@ export default function Header({ view, onBook }: { view: View; onBook: () => voi
 
   const go = (it: Item) => {
     setOpen(false);
+    setMenu(false);
     if (it.section) scrollToId(it.section);
     else if (it.route === view) scrollToId('top');
   };
@@ -90,14 +111,44 @@ export default function Header({ view, onBook }: { view: View; onBook: () => voi
     <>
       <a href="#main" onClick={(e) => { e.preventDefault(); document.getElementById('main')?.focus(); scrollToId('main'); }} className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[70] focus:bg-white focus:text-ink focus:px-4 focus:py-2 focus:rounded-full">Skip to content</a>
       <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${solid ? 'bg-white/85 backdrop-blur-xl shadow-[0_10px_30px_-18px_rgba(15,34,48,.35)]' : 'bg-transparent'}`}>
-        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4 transition-all duration-500 ${solid ? 'h-[68px]' : 'h-[84px]'}`}>
-          <a href={hrefFor(view)} onClick={(e) => { e.preventDefault(); scrollToId('top'); }} aria-label="Svasti – back to top" className="rounded-2xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky">
+        <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3 transition-all duration-500 ${solid ? 'h-[84px]' : 'h-[104px]'}`}>
+          <a href={hrefFor(view)} onClick={(e) => { e.preventDefault(); scrollToId('top'); }} aria-label="Svasti – back to top" className="rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky">
             <Logo sub={sub} light={!solid} compact={solid} />
           </a>
 
           <nav aria-label="Main" className="hidden lg:flex items-center gap-0.5">
             {ITEMS.map((it) =>
-              it.route ? (
+              it.children ? (
+                <div key={it.label} ref={menuWrap} className="relative" onMouseEnter={hoverOpen} onMouseLeave={hoverClose}>
+                  <button
+                    onClick={() => setMenu((v) => !v)}
+                    aria-haspopup="menu" aria-expanded={menu}
+                    className={`${linkCls(isOn(it) || menu)} inline-flex items-center gap-1.5`}
+                  >
+                    {it.label}
+                    <Icon name="ChevronDown" className={`w-3.5 h-3.5 transition-transform duration-300 ${menu ? 'rotate-180' : ''}`} stroke={2} />
+                  </button>
+                  <div
+                    role="menu" aria-label="Services"
+                    className={`absolute left-1/2 -translate-x-1/2 top-full pt-3 w-[22rem] transition-all duration-200 ${menu ? 'opacity-100 translate-y-0 visible' : 'opacity-0 -translate-y-1 invisible'}`}
+                  >
+                    <div className="rounded-2xl bg-white ring-1 ring-line shadow-[0_30px_60px_-24px_rgba(15,34,48,.4)] p-2 text-ink">
+                      {it.children.map((c) => (
+                        <a key={c.label} role="menuitem" href={hrefFor(c.route)} onClick={() => go(it)} tabIndex={menu ? 0 : -1} className="flex items-center gap-3.5 rounded-xl px-3 py-3 hover:bg-paper transition-colors">
+                          <span className="w-10 h-10 rounded-xl bg-acc-soft t-acc flex items-center justify-center shrink-0"><Icon name={c.icon} /></span>
+                          <span className="min-w-0">
+                            <span className="block text-[15px] font-semibold leading-tight">{c.label}</span>
+                            <span className="block text-[12px] text-muted mt-0.5">{c.hint}</span>
+                          </span>
+                        </a>
+                      ))}
+                      <button role="menuitem" onClick={() => go(it)} tabIndex={menu ? 0 : -1} className="w-full mt-1 flex items-center justify-between rounded-xl px-3 py-2.5 text-[13px] font-medium text-muted hover:text-ink hover:bg-paper transition-colors border-t border-line">
+                        View services on this page<Icon name="ArrowRight" className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ) : it.route ? (
                 <a key={it.label} href={hrefFor(it.route)} onClick={() => go(it)} aria-current={it.route === view ? 'page' : undefined} className={linkCls(isOn(it))}>{it.label}</a>
               ) : (
                 <button key={it.label} onClick={() => go(it)} className={linkCls(isOn(it))}>{it.label}</button>
@@ -105,8 +156,8 @@ export default function Header({ view, onBook }: { view: View; onBook: () => voi
             )}
           </nav>
 
-          <div className="flex items-center gap-2">
-            <a href={clinic.tel} aria-label={`Call ${clinic.phone}`} className={`hidden xl:inline-flex items-center gap-2 px-3 py-2 rounded-full text-[14px] font-medium transition-colors ${solid ? 'text-ink hover:bg-ink/5' : 'text-white hover:bg-white/10'}`}>
+          <div className="flex items-center gap-1.5">
+            <a href={clinic.tel} aria-label={`Call ${clinic.phone}`} className={`hidden xl:inline-flex items-center gap-1.5 px-2 py-2 rounded-full text-[14px] font-medium transition-colors ${solid ? 'text-ink hover:bg-ink/5' : 'text-white hover:bg-white/10'}`}>
               <Icon name="Phone" className="w-4 h-4" />{clinic.phone}
             </a>
             <span className="hidden sm:block"><Button onClick={onBook} size="sm" arrow>Book Appointment</Button></span>
@@ -135,17 +186,34 @@ export default function Header({ view, onBook }: { view: View; onBook: () => voi
         <div className="aura w-[22rem] h-[22rem] bg-teal/40 -top-20 -right-24" />
         <div className="aura w-[20rem] h-[20rem] bg-coral/35 bottom-10 -left-24" />
         <div className="relative min-h-full flex flex-col px-4 sm:px-6 pb-8">
-          <div className="h-[84px] flex items-center justify-between">
+          <div className="h-[96px] flex items-center justify-between">
             <Logo sub={sub} light />
             <button ref={closeBtn} onClick={() => { setOpen(false); burger.current?.focus(); }} aria-label="Close menu" className="w-11 h-11 inline-flex items-center justify-center rounded-full bg-white/10 hover:bg-white/20">
               <Icon name="X" className="w-6 h-6" />
             </button>
           </div>
-          <nav aria-label="Mobile" className="mt-6 flex flex-col">
+          <nav aria-label="Mobile" className="mt-4 flex flex-col">
             {ITEMS.map((it, n) => {
               const cls = `group flex items-center justify-between py-4 border-b border-white/10 font-display text-[1.9rem] font-semibold tracking-tight transition-all duration-500 ${open ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'} ${isOn(it) ? 'text-white' : 'text-white/75'}`;
               const style = { transitionDelay: open ? `${120 + n * 60}ms` : '0ms' };
               const inner = <>{it.label}<Icon name="ArrowUpRight" className="w-6 h-6 text-white/40 group-hover:text-white transition-colors" /></>;
+              if (it.children) {
+                return (
+                  <div key={it.label} className={`border-b border-white/10 transition-all duration-500 ${open ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} style={style}>
+                    <button onClick={() => go(it)} tabIndex={open ? 0 : -1} className="w-full flex items-center justify-between pt-4 pb-2 text-left font-display text-[1.9rem] font-semibold tracking-tight text-white/75">
+                      {it.label}<Icon name="ArrowUpRight" className="w-6 h-6 text-white/40" />
+                    </button>
+                    <div className="pb-4 grid gap-2">
+                      {it.children.map((c) => (
+                        <a key={c.label} href={hrefFor(c.route)} onClick={() => go(it)} tabIndex={open ? 0 : -1} className="flex items-center gap-3 rounded-2xl bg-white/[0.06] px-4 py-3 text-white">
+                          <Icon name={c.icon} className="w-5 h-5 text-white/80" />
+                          <span className="text-[17px] font-medium">{c.label}</span>
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                );
+              }
               return it.route ? (
                 <a key={it.label} href={hrefFor(it.route)} onClick={() => go(it)} tabIndex={open ? 0 : -1} className={cls} style={style}>{inner}</a>
               ) : (

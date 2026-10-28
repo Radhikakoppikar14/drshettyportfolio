@@ -13,6 +13,7 @@ import Icon from '../components/Icon.tsx';
 import Img from '../components/Img.tsx';
 import MobileBar from '../components/MobileBar.tsx';
 import PatientExperience from '../components/Patientexperience.tsx';
+import Statement from '../components/Statement.tsx';
 import Reveal from '../components/Reveal.tsx';
 import TrustHighlights from '../components/Trusthighlights.tsx';
 import { clinic, clinicProfile, dental, doctors, heart, homeExp, img, type Dept } from '../data.ts';
@@ -49,8 +50,8 @@ const DoctorCard = ({ d, n, onBook }: { d: Dept; n: number; onBook: (t: string) 
   return (
     <Reveal delay={n * 140} className="h-full">
       <article className="group lift h-full flex flex-col sm:flex-row bg-white rounded-[2rem] ring-1 ring-line overflow-hidden">
-        <div className="relative sm:w-[40%] shrink-0 aspect-[4/3] sm:aspect-auto overflow-hidden bg-cream zoom-img">
-          <Img src={d.doctor.image} alt={`${d.doctor.name}, ${d.doctor.role}`} className="absolute inset-0 w-full h-full object-[50%_18%]" />
+        <div className="relative sm:w-[40%] shrink-0 aspect-[4/3] sm:aspect-auto overflow-hidden bg-white zoom-img">
+          <Img src={d.doctor.image} alt={`${d.doctor.name}, ${d.doctor.role}`} zoom={1} pos={d.doctor.imgPos} className="absolute inset-0 w-full h-full object-[50%_18%]" />
           <span className="absolute left-4 top-4 inline-flex items-center gap-2 h-8 px-3 rounded-full bg-white/90 backdrop-blur text-[12px] font-medium text-ink">
             <i className="w-2 h-2 rounded-full" style={{ background: c }} />{d.label}
           </span>
@@ -142,10 +143,11 @@ export default function Home() {
         </section>
 
         <PatientExperience d={homeExp} eyebrow="Why choose us" />
+        <Statement lines={['Caring for your heart.', 'And your smile.']} />
         <AppointmentCTA title="Ready to take the next step in your care?" text="Book a consultation for heart care or dental care, and let's plan your visit together." onBook={() => book()} />
         <ContactSection />
       </main>
-      <Footer onBook={() => book()} />
+      <Footer view="home" />
       <MobileBar onBook={() => book()} />
       <Booking open={open} onClose={() => setOpen(false)} topic={topic} />
     </div>

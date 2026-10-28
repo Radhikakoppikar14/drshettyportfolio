@@ -11,7 +11,7 @@ export default function TrustHighlights({ items }: { items: { t: string; i: stri
           <Icon name={h.i} className="w-[18px] h-[18px]" />
         </span>
         <span className="font-display text-lg sm:text-xl font-medium text-ink whitespace-nowrap">{h.t}</span>
-        <span className="ml-6 sm:ml-8 text-line text-2xl" aria-hidden="true">✦</span>
+        <span className="ml-6 sm:ml-8 text-2xl" style={{ color: COLORS[(n + 1) % COLORS.length] }} aria-hidden="true">✦</span>
       </li>
     ));
   return (
