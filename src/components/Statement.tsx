@@ -28,7 +28,7 @@ export default function Statement({ lines }: { lines: [string, string]; onBook?:
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <p
           ref={ref}
-          className={`font-display font-semibold tracking-tight leading-[1.15] text-ink text-center text-[1.9rem] sm:text-[2.6rem] lg:text-[3.2rem] xl:text-[3.6rem] md:whitespace-nowrap transition-all duration-700 ${on ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+          className={`font-display font-semibold tracking-tight leading-[1.15] text-ink text-center text-[1.9rem] sm:text-[2.5rem] lg:text-[clamp(2rem,3.3vw,3.4rem)] lg:whitespace-nowrap transition-all duration-700 ${on ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
         >
           <span>{first}</span>
           {/* beating icon bubble(s) between the two halves */}

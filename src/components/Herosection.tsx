@@ -33,6 +33,8 @@ export default function HeroSection({ eyebrow, tags, headline, sub, image, image
       <div className="absolute inset-0 -z-10 bg-ink/80 lg:hidden" />
       <div className="absolute inset-0 -z-10 hidden lg:block" style={{ background: 'linear-gradient(90deg, #0F2230 0%, rgba(15,34,48,.9) 36%, rgba(15,34,48,.45) 70%, rgba(15,34,48,.55) 100%)' }} />
       <div className="absolute inset-0 -z-10" style={{ background: 'linear-gradient(0deg, #0F2230 0%, transparent 38%)' }} />
+      {/* top veil: keeps sign-board text in the photo from clashing with the header menu */}
+      <div className="absolute inset-x-0 top-0 h-[42%] -z-10" style={{ background: 'linear-gradient(180deg, #0F2230 0%, rgba(15,34,48,.94) 22%, rgba(15,34,48,.7) 55%, transparent 100%)' }} />
       {/* colour aura + grid */}
       <div className="aura -z-10 w-[34rem] h-[34rem] bg-teal/35 top-[8%] right-[18%]" />
       <div className="aura -z-10 w-[28rem] h-[28rem] bg-coral/30 bottom-[4%] right-[-6%]" style={{ animationDelay: '-6s' }} />

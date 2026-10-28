@@ -19,7 +19,7 @@ type P = {
 export default function Button({ children, onClick, href, variant = 'primary', arrow, icon, className = '', size = 'md', external, type, ariaLabel }: P) {
   const v: Record<Variant, string> = {
     primary: 'btn-grad text-white shadow-[0_14px_34px_-14px_rgba(126,51,115,.7)] hover:shadow-[0_20px_44px_-14px_rgba(126,51,115,.8)]',
-    dark: 'bg-ink text-white hover:bg-ink-3',
+    dark: 'bg-acc text-white hover:brightness-110', // no navy buttons: uses the page accent colour
     light: 'bg-white text-ink hover:shadow-[0_16px_34px_-16px_rgba(0,0,0,.45)]',
     ghost: 'text-white ring-[1.5px] ring-inset ring-white/35 hover:ring-white hover:bg-white/5',
     outline: 'text-ink ring-[1.5px] ring-inset ring-ink/20 hover:ring-ink/60 bg-white/40',

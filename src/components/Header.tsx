@@ -110,7 +110,7 @@ export default function Header({ view, onBook }: { view: View; onBook: () => voi
   return (
     <>
       <a href="#main" onClick={(e) => { e.preventDefault(); document.getElementById('main')?.focus(); scrollToId('main'); }} className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[70] focus:bg-white focus:text-ink focus:px-4 focus:py-2 focus:rounded-full">Skip to content</a>
-      <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${solid ? 'bg-white/85 backdrop-blur-xl shadow-[0_10px_30px_-18px_rgba(15,34,48,.35)]' : 'bg-transparent'}`}>
+      <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${solid ? 'bg-white/85 backdrop-blur-xl shadow-[0_10px_30px_-18px_rgba(15,34,48,.35)]' : 'bg-gradient-to-b from-ink/80 via-ink/40 to-transparent'}`}>
         <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3 transition-all duration-500 ${solid ? 'h-[84px]' : 'h-[104px]'}`}>
           <a href={hrefFor(view)} onClick={(e) => { e.preventDefault(); scrollToId('top'); }} aria-label="Svasti – back to top" className="rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky">
             <Logo sub={sub} light={!solid} compact={solid} />

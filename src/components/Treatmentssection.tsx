@@ -14,10 +14,10 @@ export default function TreatmentsSection({ d, onLearn }: { d: Dept; onLearn: (t
   return (
     <section id="services" className="relative py-10 sm:py-12 lg:py-16 bg-paper">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="max-w-2xl mb-10 sm:mb-12">
+        <div className="mb-10 sm:mb-12">
           <Reveal><Eyebrow>{d.key === 'heart' ? 'Our services' : 'Our treatments'}</Eyebrow></Reveal>
-          <Reveal delay={80}><h2 className="mt-5 text-4xl sm:text-5xl lg:text-[3.6rem] text-ink">{d.servicesTitle}</h2></Reveal>
-          <Reveal delay={140}><p className="mt-4 text-muted leading-relaxed text-base sm:text-[17px]">{d.servicesSub}</p></Reveal>
+          <Reveal delay={80}><h2 className="mt-5 text-4xl sm:text-5xl lg:text-[3.6rem] md:whitespace-nowrap text-ink">{d.servicesTitle}</h2></Reveal>
+          <Reveal delay={140}><p className="mt-4 max-w-2xl text-muted leading-relaxed text-base sm:text-[17px]">{d.servicesSub}</p></Reveal>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {d.services.map((s, n) => (

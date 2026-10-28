@@ -44,6 +44,18 @@ const CareCards = () => (
   </div>
 );
 
+// Two-colour button pairs per department (white text keeps strong contrast on both ends of each gradient).
+const BTN = {
+  heart: {
+    main: 'bg-[linear-gradient(100deg,#E5484D_0%,#B4265B_55%,#E5484D_100%)]! shadow-[0_12px_26px_-12px_rgba(180,38,91,.7)]',
+    soft: 'text-[#B4265B]! ring-[#E5484D]/45! bg-[#FDF1F1]! hover:ring-[#B4265B]! hover:bg-[#FBE3E5]!',
+  },
+  dental: {
+    main: 'bg-[linear-gradient(100deg,#0E9384_0%,#1F5FA8_55%,#0E9384_100%)]! shadow-[0_12px_26px_-12px_rgba(31,95,168,.6)]',
+    soft: 'text-[#0A7468]! ring-[#0E9384]/45! bg-[#EEF8F6]! hover:ring-[#0A7468]! hover:bg-[#DDF1ED]!',
+  },
+} as const;
+
 // One doctor card (heart or dental) linking to that department's website.
 const DoctorCard = ({ d, n, onBook }: { d: Dept; n: number; onBook: (t: string) => void }) => {
   const c = d.key === 'heart' ? '#E5484D' : '#0E9384';
@@ -71,8 +83,8 @@ const DoctorCard = ({ d, n, onBook }: { d: Dept; n: number; onBook: (t: string) 
             ))}
           </ul>
           <div className="mt-6 flex flex-wrap gap-2.5">
-            <Button href={hrefFor(d.key)} variant="dark" size="sm" arrow>View {d.label}</Button>
-            <Button onClick={() => onBook(`${d.label} consultation`)} variant="outline" size="sm">Book Visit</Button>
+            <Button href={hrefFor(d.key)} variant="accent" size="sm" arrow className={`${BTN[d.key].main} bg-size-[180%_100%]! bg-left! hover:bg-right! hover:brightness-100! transition-[background-position,transform,box-shadow]! duration-500!`}>View {d.label}</Button>
+            <Button onClick={() => onBook(`${d.label} consultation`)} variant="outline" size="sm" className={BTN[d.key].soft}>Book Visit</Button>
           </div>
         </div>
       </article>
@@ -129,10 +141,10 @@ export default function Home() {
         {/* Our doctors */}
         <section id="doctors" className="py-10 sm:py-12 lg:py-16 bg-paper">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
-              <div className="max-w-2xl">
+            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
+              <div className="min-w-0">
                 <Reveal><Eyebrow>Meet our doctors</Eyebrow></Reveal>
-                <Reveal delay={80}><h2 className="mt-5 text-4xl sm:text-5xl lg:text-[3.6rem] text-ink">Two specialists. <span className="gt-light">One caring team.</span></h2></Reveal>
+                <Reveal delay={80}><h2 className="mt-5 text-4xl sm:text-5xl lg:text-[clamp(2.4rem,3.6vw,3.6rem)] lg:whitespace-nowrap text-ink">Two specialists. <span className="gt-light">One caring team.</span></h2></Reveal>
               </div>
               <Reveal delay={160}><Button onClick={() => book()} variant="outline" arrow>Book a Consultation</Button></Reveal>
             </div>
