@@ -84,9 +84,9 @@ const DoctorCard = ({ d, n, onBook }: { d: Dept; n: number; onBook: (t: string) 
               <li key={p} className="flex items-start gap-2.5 text-sm text-muted"><Icon name="Check" className="w-4 h-4 mt-0.5 shrink-0" stroke={2.2} />{p}</li>
             ))}
           </ul>
-          <div className="mt-6 flex flex-wrap gap-2.5">
-            <Button href={hrefFor(d.key)} variant="accent" size="sm" arrow className={`${BTN[d.key].main} bg-size-[180%_100%]! bg-left! hover:bg-right! hover:brightness-100! transition-[background-position,transform,box-shadow]! duration-500!`}>View {d.label}</Button>
-            <Button onClick={() => onBook(`${d.label} consultation`)} variant="outline" size="sm" className={BTN[d.key].soft}>Book Visit</Button>
+          <div className="mt-6 flex flex-nowrap items-center gap-2">
+            <Button href={hrefFor(d.key)} variant="accent" size="sm" arrow className={`px-4! shrink-0 ${BTN[d.key].main} bg-size-[180%_100%]! bg-left! hover:bg-right! hover:brightness-100! transition-[background-position,transform,box-shadow]! duration-500!`}>View {d.label}</Button>
+            <Button onClick={() => onBook(`${d.label} consultation`)} variant="outline" size="sm" className={`px-4! shrink-0 ${BTN[d.key].soft}`}>Book Visit</Button>
           </div>
         </div>
       </article>
