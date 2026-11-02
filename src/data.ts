@@ -15,7 +15,7 @@ export const clinic = {
   hours: primary.hours,
   phone: primary.phone,
   tel: primary.tel,
-  email: 'info@drshettyclinic.com', // demo email - replace with the clinic's real email
+  email: 'info@svasticlinic.com',
   directions: directionsUrl(primary),
 };
 
