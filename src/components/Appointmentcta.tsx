@@ -7,24 +7,25 @@ import useParallax from './useParallax.ts';
 import { clinic, img } from '../data.ts';
 
 // Soft medical-cross pattern (very faint) for a calm clinic feel.
-const CROSS = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='76' height='76'%3E%3Cpath d='M35 29h6v6h6v6h-6v6h-6v-6h-6v-6h6z' fill='%230E9384' fill-opacity='.05'/%3E%3C/svg%3E")`;
+const cross = (hex: string) => `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='76' height='76'%3E%3Cpath d='M35 29h6v6h6v6h-6v6h-6v-6h-6v-6h6z' fill='%23${hex}' fill-opacity='.05'/%3E%3C/svg%3E")`;
+const CROSS = { heart: cross('E5484D'), dental: cross('0E9384'), home: cross('2563A8') };
 
 // Appointment banner in a light, calm clinic style: bright clinic photo behind a soft white wash,
 // centred text. Hours / address live in the Contact section just below, so they are not repeated here.
 export default function AppointmentCTA({ title, text, onBook, image = img.reception, dept }: { title: string; text: string; onBook: () => void; image?: string; dept?: 'heart' | 'dental' }) {
   const par = useParallax<HTMLDivElement>(0.08);
   return (
-    <section className="px-4 sm:px-6 lg:px-8 py-6 sm:py-8 bg-paper">
+    <section className="px-4 sm:px-6 lg:px-8 py-4 sm:py-5 bg-paper">
       <Reveal v="zoom">
-        <div className="relative isolate overflow-hidden max-w-7xl mx-auto rounded-[2rem] sm:rounded-[2.75rem] bg-[#EEF7F5] ring-1 ring-[#D5EAE6] px-5 py-12 sm:px-12 sm:py-16 md:px-16 md:py-24 text-center">
+        <div className="relative isolate overflow-hidden max-w-7xl mx-auto rounded-[2rem] sm:rounded-[2.75rem] px-5 py-10 sm:px-12 sm:py-12 md:px-16 md:py-16 text-center" style={{ background: 'var(--tint)', boxShadow: '0 0 0 1px var(--tint-line)' }}>
           {/* bright clinic photo */}
           <div className="absolute inset-0 -z-30 overflow-hidden">
             <div ref={par} className="absolute inset-x-0 -top-[10%] h-[120%]"><Img src={image} alt="" zoom={1.04} className="w-full h-full" /></div>
           </div>
           {/* soft white / mint wash: clean in the middle for the text, photo visible at the sides */}
-          <div className="absolute inset-0 -z-20" style={{ background: 'radial-gradient(ellipse 62% 80% at 50% 50%, rgba(255,255,255,.95) 0%, rgba(246,251,250,.9) 55%, rgba(238,247,245,.62) 100%)' }} />
-          <div className="absolute inset-0 -z-10" style={{ backgroundImage: CROSS }} />
-          <div className="absolute inset-x-0 top-0 h-1.5 -z-10" style={{ background: 'linear-gradient(90deg,#0E9384,#3BA7E5,#E5484D)' }} />
+          <div className="absolute inset-0 -z-20" style={{ background: 'radial-gradient(ellipse 62% 80% at 50% 50%, rgba(255,255,255,.95) 0%, color-mix(in srgb, var(--tint) 30%, rgba(255,255,255,.9)) 55%, color-mix(in srgb, var(--tint) 62%, transparent) 100%)' }} />
+          <div className="absolute inset-0 -z-10" style={{ backgroundImage: CROSS[dept ?? 'home'] }} />
+          <div className="absolute inset-x-0 top-0 h-1.5 -z-10" style={{ background: 'var(--grad-btn)' }} />
 
           <div className="relative mx-auto max-w-5xl">
             <div className="flex justify-center items-center gap-3 mb-5 sm:mb-6">

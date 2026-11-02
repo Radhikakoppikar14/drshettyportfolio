@@ -24,7 +24,7 @@ export default function Statement({ lines }: { lines: [string, string]; onBook?:
   const second = lines[1].charAt(0).toLowerCase() + lines[1].slice(1);
 
   return (
-    <section aria-label="Our promise" className="bg-paper py-10 sm:py-14">
+    <section aria-label="Our promise" className="bg-paper py-6 sm:py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <p
           ref={ref}
@@ -49,9 +49,9 @@ export default function Statement({ lines }: { lines: [string, string]; onBook?:
             <svg className="absolute left-0 -bottom-2 sm:-bottom-3 w-full h-3 sm:h-4 overflow-visible" viewBox="0 0 300 16" preserveAspectRatio="none" aria-hidden="true">
               <defs>
                 <linearGradient id="st-grad" x1="0" x2="1">
-                  <stop offset="0" stopColor="#0E9384" />
-                  <stop offset=".5" stopColor="#3BA7E5" />
-                  <stop offset="1" stopColor="#E5484D" />
+                  <stop offset="0" style={{ stopColor: 'var(--acc-ink)' }} />
+                  <stop offset=".5" style={{ stopColor: 'var(--acc)' }} />
+                  <stop offset="1" style={{ stopColor: 'var(--acc-2)' }} />
                 </linearGradient>
               </defs>
               <path

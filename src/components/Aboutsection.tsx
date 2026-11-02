@@ -21,14 +21,19 @@ type P = {
 
 const BENEFIT_ICONS = ['UserRound', 'MessageCircle', 'ShieldCheck'];
 
+// Makes doctor names (e.g. "Dr. Sreekanth B. Shetty") bold inside a paragraph.
+const DOCTOR_NAME = /(Dr\.\s[A-Z][a-z]+(?:\s[A-Z]\.)?\s[A-Z][a-z]+)/g;
+const boldNames = (t: string) =>
+  t.split(DOCTOR_NAME).map((part, i) => (i % 2 === 1 ? <strong key={i} className="font-semibold text-ink">{part}</strong> : part));
+
 // Image-led "about" block: large masked photo with parallax, overlapping second photo, floating stat.
 export default function AboutSection({ eyebrow = 'About us', title, text, benefits, image, image2, alt, alt2 = '', stat, onApproach, ctaLabel = 'Our Approach' }: P) {
   const par = useParallax<HTMLDivElement>(0.08);
   return (
-    <section id="about" className="relative py-10 sm:py-12 lg:py-16 bg-paper overflow-hidden">
+    <section id="about" className="relative pt-2 pb-8 sm:pt-4 sm:pb-10 lg:pt-4 lg:pb-12 bg-paper overflow-hidden">
       <div className="aura w-[30rem] h-[30rem] bg-[var(--acc-soft)] -left-40 top-10 opacity-90" />
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
-        <div className="lg:col-span-6 relative pb-10 sm:pb-14 pr-6 sm:pr-14">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+        <div className="lg:col-span-6 relative pb-8 sm:pb-10 pr-6 sm:pr-14">
           <Reveal repeat v="mask">
             <div className="relative overflow-hidden rounded-[2rem] sm:rounded-[2.5rem] aspect-[4/5] sm:aspect-[5/5] bg-cream">
               <div ref={par} className="absolute inset-x-0 -top-[8%] h-[116%]">
@@ -58,7 +63,7 @@ export default function AboutSection({ eyebrow = 'About us', title, text, benefi
           <Reveal repeat delay={80}>
             <h2 className="mt-5 text-4xl sm:text-5xl lg:text-[3.6rem] text-ink">{title[0]}<br />{title[1].includes('|') ? <>{title[1].split('|')[0]} <span className="t-acc">{title[1].split('|')[1]}</span></> : <span className="t-acc">{title[1]}</span>}</h2>
           </Reveal>
-          <Reveal repeat delay={160}><p className="mt-6 text-muted text-base sm:text-[17px] leading-relaxed max-w-xl">{text}</p></Reveal>
+          <Reveal repeat delay={160}><p className="mt-6 text-muted text-base sm:text-[17px] leading-relaxed max-w-xl">{boldNames(text)}</p></Reveal>
           <ul className="mt-8 grid gap-3">
             {benefits.map((b, n) => (
               <Reveal repeat as="li" key={b} delay={220 + n * 90} v="left">

@@ -52,7 +52,7 @@ export default function SitePage({ d }: { d: Dept }) {
       <Header view={d.key} onBook={() => book()} />
       <main id="main" tabIndex={-1} className="outline-none">
         <HeroSection
-          tags={[{ t: d.label, c: isHeart ? '#E5484D' : '#14B8A6' }, { t: 'Svasti, HSR Layout', c: '#F5B53D' }]}
+          tags={[{ t: d.label, c: isHeart ? '#E5484D' : '#14B8A6' }, { t: 'Svasti, HSR Layout', c: isHeart ? '#FF9A93' : '#5FD3C4' }]}
           headline={d.headline}
           sub={d.sub}
           image={d.heroImg}

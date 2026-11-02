@@ -110,7 +110,7 @@ export default function Header({ view, onBook }: { view: View; onBook: () => voi
   return (
     <>
       <a href="#main" onClick={(e) => { e.preventDefault(); document.getElementById('main')?.focus(); scrollToId('main'); }} className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[70] focus:bg-white focus:text-ink focus:px-4 focus:py-2 focus:rounded-full">Skip to content</a>
-      <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${solid ? 'bg-white/85 backdrop-blur-xl shadow-[0_10px_30px_-18px_rgba(15,34,48,.35)]' : 'bg-gradient-to-b from-ink/80 via-ink/40 to-transparent'}`}>
+      <header className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${solid ? 'bg-white/85 backdrop-blur-xl shadow-[0_10px_30px_-18px_rgba(15,34,48,.35)]' : 'hdr-veil'}`}>
         <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-3 transition-all duration-500 ${solid ? 'h-[84px]' : 'h-[104px]'}`}>
           <a href={hrefFor(view)} onClick={(e) => { e.preventDefault(); scrollToId('top'); }} aria-label="Svasti – back to top" className="rounded-xl focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky">
             <Logo sub={sub} light={!solid} compact={solid} />
@@ -181,10 +181,10 @@ export default function Header({ view, onBook }: { view: View; onBook: () => voi
       <div
         id="mobile-menu"
         role="dialog" aria-modal="true" aria-label="Menu" aria-hidden={!open}
-        className={`lg:hidden fixed inset-0 z-[60] bg-ink text-white overflow-y-auto transition-[opacity,visibility] duration-500 ${open ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
+        className={`lg:hidden fixed inset-0 z-[60] bg-dark text-white overflow-y-auto transition-[opacity,visibility] duration-500 ${open ? 'opacity-100 visible' : 'opacity-0 invisible'}`}
       >
-        <div className="aura w-[22rem] h-[22rem] bg-teal/40 -top-20 -right-24" />
-        <div className="aura w-[20rem] h-[20rem] bg-coral/35 bottom-10 -left-24" />
+        <div className="aura aura-a1 opacity-40 w-[22rem] h-[22rem] -top-20 -right-24" />
+        <div className="aura aura-a2 opacity-35 w-[20rem] h-[20rem] bottom-10 -left-24" />
         <div className="relative min-h-full flex flex-col px-4 sm:px-6 pb-8">
           <div className="h-[96px] flex items-center justify-between">
             <Logo sub={sub} light />

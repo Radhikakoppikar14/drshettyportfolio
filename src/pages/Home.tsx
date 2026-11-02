@@ -47,11 +47,11 @@ const CareCards = () => (
 // Two-colour button pairs per department (white text keeps strong contrast on both ends of each gradient).
 const BTN = {
   heart: {
-    main: 'bg-[linear-gradient(100deg,#E5484D_0%,#B4265B_55%,#E5484D_100%)]! shadow-[0_12px_26px_-12px_rgba(180,38,91,.7)]',
-    soft: 'text-[#B4265B]! ring-[#E5484D]/45! bg-[#FDF1F1]! hover:ring-[#B4265B]! hover:bg-[#FBE3E5]!',
+    main: 'bg-[linear-gradient(100deg,#BE3038_0%,#E5484D_55%,#BE3038_100%)]! shadow-[0_12px_26px_-12px_rgba(229,72,77,.7)]',
+    soft: 'text-[#BE3038]! ring-[#E5484D]/45! bg-[#FDF1F1]! hover:ring-[#BE3038]! hover:bg-[#FBE3E5]!',
   },
   dental: {
-    main: 'bg-[linear-gradient(100deg,#0E9384_0%,#1F5FA8_55%,#0E9384_100%)]! shadow-[0_12px_26px_-12px_rgba(31,95,168,.6)]',
+    main: 'bg-[linear-gradient(100deg,#0A7468_0%,#14B8A6_55%,#0A7468_100%)]! shadow-[0_12px_26px_-12px_rgba(14,147,132,.6)]',
     soft: 'text-[#0A7468]! ring-[#0E9384]/45! bg-[#EEF8F6]! hover:ring-[#0A7468]! hover:bg-[#DDF1ED]!',
   },
 } as const;
@@ -62,11 +62,13 @@ const DoctorCard = ({ d, n, onBook }: { d: Dept; n: number; onBook: (t: string) 
   return (
     <Reveal delay={n * 140} className="h-full">
       <article className="group lift h-full flex flex-col sm:flex-row bg-white rounded-[2rem] ring-1 ring-line overflow-hidden">
-        <div className="relative sm:w-[40%] shrink-0 aspect-[4/3] sm:aspect-auto overflow-hidden bg-white zoom-img">
-          <Img src={d.doctor.image} alt={`${d.doctor.name}, ${d.doctor.role}`} zoom={1} pos={d.doctor.imgPos} className="absolute inset-0 w-full h-full object-[50%_18%]" />
-          <span className="absolute left-4 top-4 inline-flex items-center gap-2 h-8 px-3 rounded-full bg-white/90 backdrop-blur text-[12px] font-medium text-ink">
-            <i className="w-2 h-2 rounded-full" style={{ background: c }} />{d.label}
-          </span>
+        <div className="relative sm:w-[44%] shrink-0 flex items-center justify-center p-4 sm:p-5" style={{ background: d.key === 'heart' ? '#FDEFF0' : '#E8F6F3' }}>
+          <div className="relative w-full max-w-sm sm:max-w-none aspect-[3/4] overflow-hidden rounded-[1.5rem] bg-white zoom-img">
+            <Img src={d.doctor.image} alt={`${d.doctor.name}, ${d.doctor.role}`} zoom={1} pos={d.doctor.imgPos ?? '50% 8%'} className="absolute inset-0 w-full h-full" />
+            <span className="absolute left-3 top-3 inline-flex items-center gap-2 h-8 px-3 rounded-full bg-white/90 backdrop-blur text-[12px] font-medium text-ink">
+              <i className="w-2 h-2 rounded-full" style={{ background: c }} />{d.label}
+            </span>
+          </div>
         </div>
         <div className="relative flex flex-col flex-1 p-6">
           <span className="absolute inset-x-0 top-0 h-1 sm:hidden" style={{ background: c }} />
@@ -105,7 +107,7 @@ export default function Home() {
       <Header view="home" onBook={() => book()} />
       <main id="main" tabIndex={-1} className="outline-none">
         <HeroSection
-          tags={[{ t: 'Heart Care', c: '#E5484D' }, { t: 'Dental Care', c: '#14B8A6' }, { t: 'HSR Layout, Bengaluru', c: '#F5B53D' }]}
+          tags={[{ t: 'Heart Care', c: '#E5484D' }, { t: 'Dental Care', c: '#14B8A6' }, { t: 'HSR Layout, Bengaluru', c: '#8DBBF5' }]}
           headline={['Caring for your heart.', 'Creating healthy smiles.']}
           sub={clinicProfile.tagline}
           image={img.building}
@@ -139,9 +141,9 @@ export default function Home() {
         </div>
 
         {/* Our doctors */}
-        <section id="doctors" className="py-10 sm:py-12 lg:py-16 bg-paper">
+        <section id="doctors" className="py-8 sm:py-10 lg:py-12 bg-paper">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-12">
+            <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8">
               <div className="min-w-0">
                 <Reveal><Eyebrow>Meet our doctors</Eyebrow></Reveal>
                 <Reveal delay={80}><h2 className="mt-5 text-4xl sm:text-5xl lg:text-[clamp(2.4rem,3.6vw,3.6rem)] lg:whitespace-nowrap text-ink">Two specialists. <span className="gt-light">One caring team.</span></h2></Reveal>

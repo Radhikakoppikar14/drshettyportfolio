@@ -13,15 +13,15 @@ const LOOK = {
   dental: {
     id: 'dental-care', icon: 'Smile', dark: false,
     section: 'bg-teal-soft', title: 'text-ink', text: 'text-muted', acc: 'text-teal-ink',
-    colors: ['#0E9384', '#3BA7E5', '#14B8A6', '#2563A8'],
-    aura: ['bg-teal/25', 'bg-sky/25'],
+    colors: ['#0E9384', '#14B8A6', '#0A7468', '#2DB5A5'],
+    aura: ['bg-teal/25', 'bg-teal/15'],
     blurb: 'Gentle, modern dentistry for every age, from routine check-ups to restoring a confident smile.',
   },
   heart: {
     id: 'heart-care', icon: 'HeartPulse', dark: true,
-    section: 'bg-ink', title: 'text-white', text: 'text-muted-d', acc: 'text-coral',
-    colors: ['#E5484D', '#F5A25B', '#E73D87', '#F5B53D'],
-    aura: ['bg-coral/30', 'bg-plum/40'],
+    section: 'bg-[#2A1520]', title: 'text-white', text: 'text-muted-d', acc: 'text-coral',
+    colors: ['#E5484D', '#F0605F', '#BE3038', '#D63A42'],
+    aura: ['bg-coral/30', 'bg-coral/20'],
     blurb: 'Careful cardiac evaluation and interventional care, with every report and option explained clearly.',
   },
 } as const;
@@ -30,13 +30,13 @@ export default function CareSection({ d, onBook, flip = false }: { d: Dept; onBo
   const L = LOOK[d.key];
   const par = useParallax<HTMLDivElement>(0.09);
   return (
-    <section id={L.id} className={`relative isolate overflow-hidden py-16 sm:py-20 lg:py-28 ${L.section}`}>
+    <section id={L.id} className={`theme-${d.key} relative isolate overflow-hidden py-8 sm:py-10 lg:py-14 ${L.section}`}>
       <div className={`aura -z-10 w-[32rem] h-[32rem] ${L.aura[0]} ${flip ? '-left-40' : '-right-40'} top-0`} />
       <div className={`aura -z-10 w-[26rem] h-[26rem] ${L.aura[1]} ${flip ? 'right-0' : 'left-1/3'} bottom-0`} style={{ animationDelay: '-8s' }} />
       {L.dark && <div className="absolute inset-0 -z-10 grid-lines opacity-60" />}
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+        <div className="grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           {/* big image */}
           <div className={`lg:col-span-6 relative ${flip ? 'lg:order-2' : ''}`}>
             <Reveal v="mask">
@@ -63,7 +63,7 @@ export default function CareSection({ d, onBook, flip = false }: { d: Dept; onBo
           </div>
 
           {/* text */}
-          <div className={`lg:col-span-6 pt-6 lg:pt-0 ${flip ? 'lg:order-1' : ''}`}>
+          <div className={`lg:col-span-6 pt-4 lg:pt-0 ${flip ? 'lg:order-1' : ''}`}>
             <Reveal><Eyebrow light={L.dark}>{d.label}</Eyebrow></Reveal>
             <Reveal delay={80}>
               <h2 className={`mt-5 text-4xl sm:text-5xl lg:text-[3.75rem] ${L.title}`}>
@@ -81,14 +81,14 @@ export default function CareSection({ d, onBook, flip = false }: { d: Dept; onBo
               </ul>
             </Reveal>
             <Reveal delay={300} className="mt-9 flex flex-col sm:flex-row gap-3">
-              <Button href={hrefFor(d.key)} variant={L.dark ? 'light' : 'dark'} arrow>Explore {d.label}</Button>
-              <Button onClick={() => onBook(`${d.label} consultation`)} variant={L.dark ? 'ghost' : 'outline'} icon="CalendarCheck">Book a Visit</Button>
+              <Button href={hrefFor(d.key)} variant="primary" arrow>Explore {d.label}</Button>
+              <Button onClick={() => onBook(`${d.label} consultation`)} variant={L.dark ? 'ghost' : 'outline'} icon="CalendarCheck" className={L.dark ? 'text-white! ring-(--acc)! hover:bg-(--acc)/20!' : 'text-(--acc-ink)! ring-(--acc)/50! bg-(--acc-soft)! hover:ring-(--acc-ink)!'}>Book a Visit</Button>
             </Reveal>
           </div>
         </div>
 
         {/* service cards */}
-        <div className="mt-20 lg:mt-24 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="mt-12 lg:mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {d.services.map((s, n) => (
             <Reveal key={s.t} delay={n * 110} className="h-full">
               <ServiceCard s={s} n={n} color={L.colors[n % 4]} dark={L.dark} href={hrefFor(d.key)} action={`Explore ${d.label}`} />

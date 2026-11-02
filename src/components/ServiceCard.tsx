@@ -26,7 +26,7 @@ export default function ServiceCard({ s, color, dark = false, href, onClick, act
       </div>
     </>
   );
-  const cls = `group glow lift zoom-img relative h-full flex flex-col text-left rounded-[1.75rem] overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky ${
+  const cls = `group glow lift zoom-img relative h-full flex flex-col text-left rounded-[1.75rem] overflow-hidden focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--acc) ${
     dark ? 'bg-white/[0.05] ring-1 ring-inset ring-white/10 hover:ring-white/25' : 'bg-white ring-1 ring-line'
   }`;
   const style = { ['--c' as string]: color } as React.CSSProperties;

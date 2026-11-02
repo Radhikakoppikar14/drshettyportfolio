@@ -1,6 +1,6 @@
 import Icon from './Icon.tsx';
 
-const COLORS = ['#0E9384', '#3BA7E5', '#E5484D', '#F5B53D', '#7A2950'];
+const COLORS = ['var(--pal-1)', 'var(--pal-2)', 'var(--pal-3)', 'var(--pal-4)'];
 
 // Gently scrolling strip of highlights / specialities (pauses on hover, static for reduced motion).
 export default function TrustHighlights({ items }: { items: { t: string; i: string }[] }) {
@@ -15,7 +15,7 @@ export default function TrustHighlights({ items }: { items: { t: string; i: stri
       </li>
     ));
   return (
-    <section aria-label="Highlights" className="bg-paper pt-4 pb-6 sm:pb-8">
+    <section aria-label="Highlights" className="bg-paper pt-4 pb-0">
       <div className="marquee overflow-hidden">
         <ul className="marquee-track py-2">{row(false)}{row(true)}</ul>
       </div>

@@ -24,9 +24,9 @@ export const clinic = {
 const doctorHeartImg = '/images/doctor-sreekanth.jpg|/images/clinic-front.jpg';
 const doctorDentalImg = '/images/doctor-chitra.jpg|/images/clinic-front.jpg';
 
-// Booking / inquiry form delivery. Leave '' to let the visitor send the request by email (prefilled with
-// department, treatment, name, phone, date and message). To receive requests directly, put the URL of a form
-// service or your own API here: the form then POSTs the same fields as JSON.
+// Booking form delivery. Paste the Web app URL of the Google Apps Script (see apps-script/Code.gs) between the quotes.
+// Once set, the form sends the email (and adds the calendar event) directly, with no Gmail window opening.
+// While it is '', the form falls back to opening Gmail with a prefilled message.
 export const bookingEndpoint = '';
 
 export const img = {

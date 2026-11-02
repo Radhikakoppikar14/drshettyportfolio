@@ -8,6 +8,8 @@ type Status = 'idle' | 'sending' | 'sent' | 'manual' | 'error';
 
 const DEPTS = { dental, heart } as const;
 const GENERAL = 'General consultation / not sure yet';
+// Google account whose calendar receives the appointment (the doctor's email for now).
+const CALENDAR_EMAIL = '2ab22cs046@anjuman.edu.in';
 
 // Works out which department and treatment an "Ask about this" / "Book" click was about.
 // `topic` is either a treatment title (e.g. "Braces & TMJ Therapy") or text like "Heart Care appointment".
@@ -20,7 +22,24 @@ function derive(topic: string): { dept: DeptKey; service: string } {
   return { dept: '', service: '' };
 }
 
-const today = () => new Date().toISOString().slice(0, 10);
+// Dates are typed and shown as dd/mm/yyyy (India). Internally they are converted to yyyy-mm-dd for the server.
+const localIso = (d: Date) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+const today = () => localIso(new Date());
+const toDMY = (iso: string) => (iso ? iso.split('-').reverse().join('/') : '');
+const maskDMY = (v: string) => { const d = v.replace(/\D/g, '').slice(0, 8); return [d.slice(0, 2), d.slice(2, 4), d.slice(4)].filter(Boolean).join('/'); };
+const parseDMY = (t: string) => {
+  const m = /^(\d{2})\/(\d{2})\/(\d{4})$/.exec(t);
+  if (!m) return '';
+  const [, dd, mm, yyyy] = m;
+  const d = new Date(+yyyy, +mm - 1, +dd);
+  return d.getFullYear() === +yyyy && d.getMonth() === +mm - 1 && d.getDate() === +dd ? `${yyyy}-${mm}-${dd}` : '';
+};
+// Half-hourly slots inside clinic hours (Mon–Sat, 9:00 AM – 8:30 PM).
+const SLOTS = Array.from({ length: 23 }, (_, n) => {
+  const mins = 9 * 60 + n * 30;
+  const h = Math.floor(mins / 60), m = mins % 60;
+  return { v: `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`, l: `${h % 12 || 12}:${String(m).padStart(2, '0')} ${h < 12 ? 'AM' : 'PM'}` };
+}).filter((x) => x.v <= '20:00');
 
 export default function Booking({ open, onClose, topic }: { open: boolean; onClose: () => void; topic: string }) {
   const [status, setStatus] = useState<Status>('idle');
@@ -28,8 +47,12 @@ export default function Booking({ open, onClose, topic }: { open: boolean; onClo
   const [service, setService] = useState(() => derive(topic).service);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [date, setDate] = useState('');
+  const [dateText, setDateText] = useState(''); // dd/mm/yyyy
+  const [time, setTime] = useState('');
+  const [email, setEmail] = useState('');
+  const picker = useRef<HTMLInputElement>(null);
   const [message, setMessage] = useState('');
+  const [errMsg, setErrMsg] = useState('');
   const [tried, setTried] = useState(false); // show red outlines only after a submit attempt
   const first = useRef<HTMLInputElement>(null);
   const close = () => { setStatus('idle'); onClose(); };
@@ -60,27 +83,60 @@ export default function Booking({ open, onClose, topic }: { open: boolean; onClo
   const deptLabel = dept ? DEPTS[dept].label : '';
   const services = dept ? [...DEPTS[dept].services.map((s) => s.t), GENERAL] : [];
   const purpose = [deptLabel, service].filter(Boolean).join(' – ');
-  const payload = { department: deptLabel, treatment: service || GENERAL, name: name.trim(), phone: phone.trim(), preferredDate: date, message: message.trim() };
-  const mailto = (() => {
+  const dateISO = parseDMY(dateText);
+  const dateOk = !dateText || (!!dateISO && dateISO >= today());
+  const emailOk = !email.trim() || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim());
+  const payload = {
+    department: deptLabel, deptKey: dept, treatment: service || GENERAL, name: name.trim(), phone: phone.trim(), email: email.trim(),
+    preferredDate: dateText, date: dateISO, time, message: message.trim(),
+  };
+  const mail = (() => {
     const subject = `Appointment request – ${purpose || 'General'}`;
     const body = [
       `Department: ${payload.department}`,
       `Treatment / reason: ${payload.treatment}`,
       `Name: ${payload.name}`,
       `Phone: ${payload.phone}`,
-      `Preferred date: ${payload.preferredDate || 'Not specified'}`,
+      `Email: ${payload.email || '-'}`,
+      `Preferred date: ${payload.preferredDate || 'Not specified'}${time ? ` at ${SLOTS.find((x) => x.v === time)?.l ?? time}` : ''}`,
       `Message: ${payload.message || '-'}`,
     ].join('\n');
-    return `mailto:${clinic.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    return { subject, body, mailto: `mailto:${clinic.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}` };
+  })();
+  const gmail = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(clinic.email)}&su=${encodeURIComponent(mail.subject)}&body=${encodeURIComponent(mail.body)}`;
+
+  // Google Calendar link: pre-filled event (date + chosen time, 30 min) on the doctor's calendar, patient added as guest
+  const gcal = (() => {
+    const day = (dateISO || today()).replace(/-/g, '');
+    const start = time || '10:00';
+    const [h, m] = start.split(':').map(Number);
+    const endMin = h * 60 + m + 30;
+    const end = `${String(Math.floor(endMin / 60)).padStart(2, '0')}:${String(endMin % 60).padStart(2, '0')}`;
+    const q = new URLSearchParams({
+      action: 'TEMPLATE',
+      src: CALENDAR_EMAIL,
+      text: `Appointment: ${payload.treatment} - Svasti Heart and Dental Care`,
+      dates: `${day}T${start.replace(':', '')}00/${day}T${end.replace(':', '')}00`,
+      ctz: 'Asia/Kolkata',
+      details: `Patient: ${payload.name}\nPhone: ${payload.phone}\nDepartment: ${payload.department}\n${payload.message ? `Notes: ${payload.message}\n` : ''}Please arrive 10 minutes early.`,
+      location: "Svasti Heart and Dental Care, Sector 1, HSR Layout, Bengaluru",
+      ...(payload.email ? { add: payload.email } : {}),
+    });
+    return `https://calendar.google.com/calendar/render?${q.toString()}`;
   })();
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!dateOk || !emailOk) return; // red outlines + message are shown
     if (!bookingEndpoint) { setStatus('manual'); return; }
     setStatus('sending');
+    setErrMsg('');
     try {
-      const r = await fetch(bookingEndpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(payload) });
-      setStatus(r.ok ? 'sent' : 'error');
+      // text/plain keeps this a simple request, so it also works with a Google Apps Script web app (no CORS preflight)
+      const r = await fetch(bookingEndpoint, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) });
+      const j = await r.json().catch(() => null);
+      if (r.ok && j?.ok) setStatus('sent');
+      else { setErrMsg(j?.error ?? ''); setStatus('error'); }
     } catch {
       setStatus('error');
     }
@@ -111,7 +167,7 @@ export default function Booking({ open, onClose, topic }: { open: boolean; onClo
     <Icon name={i} className="w-[18px] h-[18px] absolute left-4 top-1/2 -translate-y-1/2 text-muted/70 pointer-events-none transition-colors duration-300 group-focus-within/f:text-[var(--acc)]" />
   );
   const Tick = ({ on, right = 'right-4' }: { on: boolean; right?: string }) => (
-    <span className={`absolute ${right} top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-[#0E9384] text-white flex items-center justify-center pointer-events-none transition-all duration-300 ${on ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`}>
+    <span className={`absolute ${right} top-1/2 -translate-y-1/2 w-5 h-5 rounded-full bg-[var(--acc)] text-white flex items-center justify-center pointer-events-none transition-all duration-300 ${on ? 'opacity-100 scale-100' : 'opacity-0 scale-50'}`}>
       <Icon name="Check" className="w-3 h-3" stroke={3} />
     </span>
   );
@@ -130,17 +186,23 @@ export default function Booking({ open, onClose, topic }: { open: boolean; onClo
               <span className="w-14 h-14 rounded-full bg-acc-soft t-acc flex items-center justify-center"><Icon name="Check" className="w-7 h-7" stroke={2.2} /></span>
               <h3 id="booking-title" className="mt-5 text-3xl text-ink">{status === 'sent' ? 'Thank you' : 'One last step'}</h3>
               <p className="text-muted mt-2 text-sm">
-                {status === 'sent' ? 'We have received your request and will call you to confirm.' : 'Send your request to the clinic by email, or call us to book right away.'}
+                {status === 'sent' ? (payload.date && time ? 'Your appointment is booked. A confirmation has been sent to the doctor' + (payload.email ? ' and to your email' : '') + '.' : 'We have received your request and will call you to confirm.') : 'Press the button below to send your request to the clinic by email, or call us to book right away.'}
               </p>
               <dl className="mt-5 rounded-2xl bg-paper ring-1 ring-line p-4 text-sm grid grid-cols-[auto_1fr] gap-x-4 gap-y-2">
                 <dt className="text-muted">Department</dt><dd className="text-ink font-medium">{payload.department}</dd>
                 <dt className="text-muted">Treatment</dt><dd className="text-ink font-medium">{payload.treatment}</dd>
                 <dt className="text-muted">Name</dt><dd className="text-ink">{payload.name}</dd>
                 <dt className="text-muted">Phone</dt><dd className="text-ink">{payload.phone}</dd>
-                <dt className="text-muted">Date</dt><dd className="text-ink">{payload.preferredDate || 'Not specified'}</dd>
+                <dt className="text-muted">Date</dt><dd className="text-ink">{payload.preferredDate ? `${payload.preferredDate}${time ? `, ${SLOTS.find((x) => x.v === time)?.l ?? time}` : ''}` : 'Not specified'}</dd>
               </dl>
               <div className="mt-6 flex flex-col gap-3">
-                {status === 'manual' && <Button href={mailto} icon="Mail" arrow>Email this request</Button>}
+                {status === 'manual' && (
+                  <>
+                    <p className="text-[13px] text-coral-ink bg-[#FDF3F2] ring-1 ring-[#F3D6D4] rounded-xl px-4 py-3">Your request has <b>not been sent yet</b>. Press <b>Send</b> in the email window that opens.</p>
+                    <Button href={gmail} external icon="Mail" arrow>Open in Gmail</Button>
+                  </>
+                )}
+                <Button href={gcal} external icon="Calendar" variant="outline">Add to Google Calendar</Button>
                 <Button href={clinic.tel} icon="Phone" variant={status === 'manual' ? 'outline' : 'primary'}>Call {clinic.phone}</Button>
                 <Button onClick={close} variant="outline">Close</Button>
               </div>
@@ -220,18 +282,45 @@ export default function Booking({ open, onClose, topic }: { open: boolean; onClo
                 <span className={label}>Preferred date <span className="text-muted/60">(optional)</span></span>
                 <div className="flex flex-wrap gap-2 mb-2">
                   {quick.map((q) => {
-                    const on = date === q.v;
+                    const on = dateISO === q.v;
                     return (
-                      <button key={q.l} type="button" onClick={() => setDate(on ? '' : q.v)} className={`h-9 px-4 rounded-full text-[13px] font-medium transition-all duration-300 hover:-translate-y-0.5 active:scale-95 ${on ? 'bg-[var(--acc)] text-white shadow-[0_10px_22px_-12px_rgba(15,34,48,.6)]' : 'bg-paper ring-1 ring-inset ring-line text-text hover:ring-[var(--acc)] hover:bg-white'}`}>
+                      <button key={q.l} type="button" onClick={() => setDateText(on ? '' : toDMY(q.v))} className={`h-9 px-4 rounded-full text-[13px] font-medium transition-all duration-300 hover:-translate-y-0.5 active:scale-95 ${on ? 'bg-[var(--acc)] text-white shadow-[0_10px_22px_-12px_rgba(15,34,48,.6)]' : 'bg-paper ring-1 ring-inset ring-line text-text hover:ring-[var(--acc)] hover:bg-white'}`}>
                         {q.l}
                       </button>
                     );
                   })}
                 </div>
-                <div className="group/f relative">
-                  <Lead i="Calendar" />
-                  <input type="date" min={today()} value={date} onChange={(e) => setDate(e.target.value)} aria-label="Preferred date" className={`${f} pr-4 cursor-pointer`} />
+                <div className="grid sm:grid-cols-2 gap-3">
+                  <div className="group/f relative">
+                    <Lead i="Calendar" />
+                    <input
+                      type="text" inputMode="numeric" autoComplete="off" maxLength={10} placeholder="dd/mm/yyyy" aria-label="Preferred date (dd/mm/yyyy)"
+                      value={dateText} onChange={(e) => setDateText(maskDMY(e.target.value))}
+                      className={`${f} ${!dateOk && (tried || dateText.length === 10) ? bad : ''}`}
+                    />
+                    <button type="button" aria-label="Open calendar" onClick={() => { const el = picker.current; if (!el) return; try { el.showPicker(); } catch { el.focus(); } }} className="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-lg flex items-center justify-center text-muted hover:text-ink hover:bg-line/50 transition-colors">
+                      <Icon name="CalendarCheck" className="w-[18px] h-[18px]" />
+                    </button>
+                    {/* hidden native picker: choosing a day fills the dd/mm/yyyy box */}
+                    <input ref={picker} type="date" tabIndex={-1} aria-hidden="true" min={today()} value={dateISO} onChange={(e) => setDateText(toDMY(e.target.value))} className="absolute left-0 bottom-0 w-full h-0 opacity-0 pointer-events-none" />
+                  </div>
+                  <div className="group/f relative">
+                    <Lead i="Clock" />
+                    <select value={time} onChange={(e) => setTime(e.target.value)} aria-label="Preferred time" className={`${f} appearance-none cursor-pointer`}>
+                      <option value="">Preferred time (optional)</option>
+                      {SLOTS.map((x) => <option key={x.v} value={x.v}>{x.l}</option>)}
+                    </select>
+                    <Icon name="ChevronDown" className="w-4 h-4 text-muted absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none transition-transform duration-300 group-focus-within/f:rotate-180" />
+                  </div>
                 </div>
+                {!dateOk && (tried || dateText.length === 10) && (
+                  <p className="fade-in mt-2 text-[12px] text-coral-ink">Please enter a valid date that is today or later, as dd/mm/yyyy.</p>
+                )}
+              </div>
+
+              <div className="group/f relative">
+                <Lead i="Mail" />
+                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} aria-label="Email" placeholder="Email for confirmation (optional)" autoComplete="email" className={`${f} ${tried && !emailOk ? bad : ''}`} />
               </div>
 
               <div className="group/f relative">
@@ -241,7 +330,7 @@ export default function Booking({ open, onClose, topic }: { open: boolean; onClo
               </div>
 
               {status === 'error' && (
-                <p role="alert" className="fade-in text-sm text-coral-ink">We could not send that just now. Please try again, or <a className="underline" href={mailto}>email us</a> or call {clinic.phone}.</p>
+                <p role="alert" className="fade-in text-sm text-coral-ink">{errMsg || 'We could not send that just now.'} Please try again, or <a className="underline" href={mail.mailto}>email us</a> or call {clinic.phone}.</p>
               )}
               <div className={`transition-all duration-500 ${filled === 4 ? 'opacity-100' : 'opacity-90'}`}>
                 <Button type="submit" arrow={status !== 'sending'} className="w-full">

@@ -5,14 +5,14 @@ import Reveal from './Reveal.tsx';
 import useParallax from './useParallax.ts';
 import type { Dept } from '../data.ts';
 
-const COLORS = ['#0E9384', '#3BA7E5', '#E5484D'];
+const COLORS = ['var(--pal-1)', 'var(--pal-2)', 'var(--pal-3)'];
 
 // "Why choose us / Our approach": tall photo with parallax + numbered cards.
 export default function PatientExperience({ d, eyebrow = 'Our approach' }: { d: Dept; eyebrow?: string }) {
   const par = useParallax<HTMLDivElement>(0.08);
   return (
-    <section id="approach" className="relative py-10 sm:py-12 lg:py-16 bg-white overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+    <section id="approach" className="relative py-8 sm:py-10 lg:py-12 bg-white overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-12 gap-8 lg:gap-12 items-center">
         <div className="lg:col-span-5 lg:order-2">
           <Reveal v="mask">
             <div className="relative overflow-hidden rounded-[2rem] sm:rounded-[2.5rem] aspect-[4/3] lg:aspect-[4/5] bg-cream">

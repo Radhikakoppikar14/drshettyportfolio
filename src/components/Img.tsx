@@ -13,7 +13,7 @@ export default function Img({ src, alt, className = '', eager = false, sizes = '
   const list = src.split('|');
   const [i, setI] = useState(0);
   if (i >= list.length) {
-    return <div role="img" aria-label={alt} className={`bg-gradient-to-br from-teal/40 via-sky/30 to-coral/40 ${className}`} />;
+    return <div role="img" aria-label={alt} className={`bg-acc-soft ${className}`} />;
   }
   const cur = list[i];
   const srcSet = isStock(cur) ? [800, 1200, 1800, 2400].map((w) => `${withWidth(cur, w)} ${w}w`).join(', ') : undefined;

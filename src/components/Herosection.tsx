@@ -22,7 +22,7 @@ type P = {
 export default function HeroSection({ eyebrow, tags, headline, sub, image, imageAlt = 'Svasti Heart and Dental Care clinic', cta1, cta2, side, meta }: P) {
   const bg = useParallax<HTMLDivElement>(0.12);
   return (
-    <section id="top" className="relative isolate overflow-hidden bg-ink text-white min-h-[80svh] lg:min-h-[78vh] flex">
+    <section id="top" className="relative isolate overflow-hidden bg-dark text-white min-h-[70svh] lg:min-h-[70vh] flex">
       {/* background photo with parallax */}
       <div className="absolute inset-0 -z-20 overflow-hidden" aria-hidden="false">
         <div ref={bg} className="absolute inset-x-0 -top-[10%] h-[120%] will-change-transform">
@@ -30,18 +30,18 @@ export default function HeroSection({ eyebrow, tags, headline, sub, image, image
         </div>
       </div>
       {/* veils for legibility: vertical on mobile, horizontal on desktop */}
-      <div className="absolute inset-0 -z-10 bg-ink/80 lg:hidden" />
-      <div className="absolute inset-0 -z-10 hidden lg:block" style={{ background: 'linear-gradient(90deg, #0F2230 0%, rgba(15,34,48,.9) 36%, rgba(15,34,48,.45) 70%, rgba(15,34,48,.55) 100%)' }} />
-      <div className="absolute inset-0 -z-10" style={{ background: 'linear-gradient(0deg, #0F2230 0%, transparent 38%)' }} />
+      <div className="absolute inset-0 -z-10 bg-dark-80 lg:hidden" />
+      <div className="absolute inset-0 -z-10 hidden lg:block" style={{ background: 'linear-gradient(90deg, rgb(var(--dark-rgb)) 0%, rgb(var(--dark-rgb) / .9) 36%, rgb(var(--dark-rgb) / .45) 70%, rgb(var(--dark-rgb) / .55) 100%)' }} />
+      <div className="absolute inset-0 -z-10" style={{ background: 'linear-gradient(0deg, rgb(var(--dark-rgb)) 0%, transparent 38%)' }} />
       {/* top veil: keeps sign-board text in the photo from clashing with the header menu */}
-      <div className="absolute inset-x-0 top-0 h-[42%] -z-10" style={{ background: 'linear-gradient(180deg, #0F2230 0%, rgba(15,34,48,.94) 22%, rgba(15,34,48,.7) 55%, transparent 100%)' }} />
+      <div className="absolute inset-x-0 top-0 h-[42%] -z-10" style={{ background: 'linear-gradient(180deg, rgb(var(--dark-rgb)) 0%, rgb(var(--dark-rgb) / .94) 22%, rgb(var(--dark-rgb) / .7) 55%, transparent 100%)' }} />
       {/* colour aura + grid */}
-      <div className="aura -z-10 w-[34rem] h-[34rem] bg-teal/35 top-[8%] right-[18%]" />
-      <div className="aura -z-10 w-[28rem] h-[28rem] bg-coral/30 bottom-[4%] right-[-6%]" style={{ animationDelay: '-6s' }} />
-      <div className="aura -z-10 w-[24rem] h-[24rem] bg-plum/40 bottom-[10%] left-[-8%]" style={{ animationDelay: '-11s' }} />
+      <div className="aura aura-a1 opacity-35 -z-10 w-[34rem] h-[34rem] top-[8%] right-[18%]" />
+      <div className="aura aura-a2 opacity-30 -z-10 w-[28rem] h-[28rem] bottom-[4%] right-[-6%]" style={{ animationDelay: '-6s' }} />
+      <div className="aura aura-a3 opacity-40 -z-10 w-[24rem] h-[24rem] bottom-[10%] left-[-8%]" style={{ animationDelay: '-11s' }} />
       <div className="absolute inset-0 -z-10 grid-lines" />
 
-      <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-16 sm:pt-28 lg:pt-28 lg:pb-20 grid lg:grid-cols-12 gap-12 lg:gap-10 items-center">
+      <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-10 sm:pt-28 lg:pt-28 lg:pb-12 grid lg:grid-cols-12 gap-12 lg:gap-10 items-center">
         <div className="lg:col-span-7">
           {(tags || eyebrow) && (
             <div className="hin d1 flex flex-wrap gap-2.5">

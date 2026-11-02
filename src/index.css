@@ -48,11 +48,47 @@
   --grad-text: linear-gradient(95deg, #5EE0CF 0%, #7CC4FF 35%, #E39BD8 65%, #FF8A7A 100%);
   --grad-text-light: linear-gradient(95deg, #0A7468 0%, #2563A8 40%, #7E3373 70%, #BE3038 100%);
   /* page accent (overridden per page) */
-  --acc: #0E9384; --acc-ink: #0A7468; --acc-soft: #E3F4F1; --acc-2: #E5484D;
+  --acc: #2563A8; --acc-ink: #1D4E89; --acc-soft: #E6EFFA; --acc-2: #4C8FE0;
 }
-.theme-home   { --acc: #0E9384; --acc-ink: #0A7468; --acc-soft: #E3F4F1; --acc-2: #E5484D; }
-.theme-dental { --acc: #0E9384; --acc-ink: #0A7468; --acc-soft: #E3F4F1; --acc-2: #3BA7E5; }
-.theme-heart  { --acc: #E5484D; --acc-ink: #BE3038; --acc-soft: #FCEDEC; --acc-2: #F5A25B; }
+/* ---------- colour schemes ----------
+   home   = blue   (the clinic as a whole, so it is clearly different from both doctors)
+   dental = teal   (Dr. Chitra S. Shetty only)
+   heart  = red    (Dr. Sreekanth B. Shetty only)
+   Every accent, gradient, aura and dark panel on a page reads these variables, so a page never borrows another page's colour. */
+.theme-home {
+  --acc: #2563A8; --acc-ink: #1D4E89; --acc-soft: #E6EFFA; --acc-2: #4C8FE0; --acc-light: #8DBBF5;
+  --grad-btn: linear-gradient(100deg, #1D4E89 0%, #2563A8 50%, #3F86DB 100%);
+  --grad-text: linear-gradient(95deg, #BBD7FF 0%, #7DB2F5 55%, #4C8FE0 100%);
+  --grad-text-light: linear-gradient(95deg, #1D4E89 0%, #2563A8 50%, #3F86DB 100%);
+  --pal-1: #2563A8; --pal-2: #3F86DB; --pal-3: #1D4E89; --pal-4: #6BA6F2;
+  --aura-1: #2563A8; --aura-2: #3F86DB; --aura-3: #1D4E89;
+  --dark-rgb: 15 34 48; --tint: #EEF4FB; --tint-line: #D5E2F3;
+}
+.theme-dental {
+  --acc: #0E9384; --acc-ink: #0A7468; --acc-soft: #E3F4F1; --acc-2: #14B8A6; --acc-light: #5FD3C4;
+  --grad-btn: linear-gradient(100deg, #0A7468 0%, #0E9384 50%, #17B5A3 100%);
+  --grad-text: linear-gradient(95deg, #8CF3E4 0%, #3DDAC6 55%, #14B8A6 100%);
+  --grad-text-light: linear-gradient(95deg, #0A7468 0%, #0E9384 50%, #14A898 100%);
+  --pal-1: #0E9384; --pal-2: #14B8A6; --pal-3: #0A7468; --pal-4: #2DB5A5;
+  --aura-1: #0E9384; --aura-2: #14B8A6; --aura-3: #0A7468;
+  --dark-rgb: 11 47 51; --tint: #EEF7F5; --tint-line: #D5EAE6;
+}
+.theme-heart {
+  --acc: #E5484D; --acc-ink: #BE3038; --acc-soft: #FCEDEC; --acc-2: #F0605F; --acc-light: #FF9A93;
+  --grad-btn: linear-gradient(100deg, #B4262E 0%, #E5484D 50%, #F06A5C 100%);
+  --grad-text: linear-gradient(95deg, #FFB3AD 0%, #FF7D78 55%, #F0605F 100%);
+  --grad-text-light: linear-gradient(95deg, #BE3038 0%, #E5484D 50%, #F06A5C 100%);
+  --pal-1: #E5484D; --pal-2: #F0605F; --pal-3: #BE3038; --pal-4: #D63A42;
+  --aura-1: #E5484D; --aura-2: #F0605F; --aura-3: #BE3038;
+  --dark-rgb: 42 21 32; --tint: #FDF1F0; --tint-line: #F3D6D4;
+}
+/* page-coloured dark panels and glows */
+.bg-dark { background: rgb(var(--dark-rgb)); }
+.bg-dark-80 { background: rgb(var(--dark-rgb) / .8); }
+.hdr-veil { background: linear-gradient(to bottom, rgb(var(--dark-rgb) / .8), rgb(var(--dark-rgb) / .4), transparent); }
+.aura-a1 { background: var(--aura-1); }
+.aura-a2 { background: var(--aura-2); }
+.aura-a3 { background: var(--aura-3); }
 
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 /* never allow sideways scrolling on phones (slide-in animations start off-screen) */
@@ -92,7 +128,7 @@ h1, h2, h3, h4, .font-serif, .font-display {
 .rv[data-v="left"] { transform: translateX(-44px); }
 .rv[data-v="right"] { transform: translateX(44px); }
 .rv[data-v="zoom"] { transform: scale(.94); }
-.rv[data-v="mask"] { opacity: 1; clip-path: inset(14% 10% 14% 10% round 2.5rem); transform: scale(1.04); }
+.rv[data-v="mask"] { opacity: 1; clip-path: inset(5% 6% 5% 6% round 2.5rem); transform: scale(1.02); }
 .rv.in { opacity: 1; transform: none; }
 .rv.in[data-v="mask"] { clip-path: inset(0 0 0 0 round 0); }
 

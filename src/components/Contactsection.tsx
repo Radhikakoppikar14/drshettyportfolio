@@ -5,7 +5,7 @@ import Reveal from './Reveal.tsx';
 import { clinic } from '../data.ts';
 import { primary, embedUrl } from '../locations.ts';
 
-const COLORS = ['#0E9384', '#3BA7E5', '#E5484D', '#F5B53D'];
+const COLORS = ['var(--pal-1)', 'var(--pal-2)', 'var(--pal-3)', 'var(--pal-4)'];
 
 export default function ContactSection() {
   const rows: [string, string, string, string?][] = [
@@ -15,7 +15,7 @@ export default function ContactSection() {
     ['Clock', 'Opening hours', clinic.hours],
   ];
   return (
-    <section id="contact" className="py-10 sm:py-12 lg:py-16 bg-paper overflow-x-clip">
+    <section id="contact" className="py-8 sm:py-10 lg:py-12 bg-paper overflow-x-clip">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="max-w-2xl">
           <Reveal><Eyebrow>Contact &amp; location</Eyebrow></Reveal>
@@ -23,8 +23,8 @@ export default function ContactSection() {
         </div>
         <div className="mt-8 grid lg:grid-cols-12 gap-5">
           <Reveal v="left" className="lg:col-span-5">
-            <div className="relative isolate overflow-hidden h-full rounded-[2rem] bg-ink text-white p-6 sm:p-9">
-              <div className="aura -z-10 w-72 h-72 bg-teal/35 -right-20 -top-20" />
+            <div className="relative isolate overflow-hidden h-full rounded-[2rem] bg-dark text-white p-6 sm:p-9">
+              <div className="aura aura-a1 opacity-35 -z-10 w-72 h-72 -right-20 -top-20" />
               <h3 className="text-2xl">{clinic.full}</h3>
               <ul className="mt-7 space-y-5">
                 {rows.map(([i, l, v, href], n) => (

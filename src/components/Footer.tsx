@@ -40,10 +40,10 @@ export default function Footer({ view = 'home', onBook }: { view?: Route; onBook
   const a = 'link-u inline-block py-1 text-left text-white/80 hover:text-white transition-colors';
   return (
     <footer className="relative isolate overflow-hidden text-white" style={{ background: L.bg }}>
-      <div className="aura -z-10 w-[30rem] h-[30rem] bg-teal/20 -left-40 -top-40" />
-      <div className="aura -z-10 w-[26rem] h-[26rem] bg-coral/20 -right-32 top-10" style={{ animationDelay: '-9s' }} />
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-10 sm:pt-12">
-        <div className="pb-10 grid gap-10 sm:grid-cols-2 lg:grid-cols-12 text-sm">
+      <div className="aura aura-a1 opacity-20 -z-10 w-[30rem] h-[30rem] -left-40 -top-40" />
+      <div className="aura aura-a2 opacity-20 -z-10 w-[26rem] h-[26rem] -right-32 top-10" style={{ animationDelay: '-9s' }} />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-10">
+        <div className="pb-8 grid gap-8 sm:grid-cols-2 lg:grid-cols-12 text-sm">
           <div className="lg:col-span-4 space-y-5">
             <Logo light />
             <p className="text-white/70 max-w-sm leading-relaxed">{L.blurb}</p>
@@ -74,10 +74,10 @@ export default function Footer({ view = 'home', onBook }: { view?: Route; onBook
           <div className="lg:col-span-3">
             <p className={h}>Contact</p>
             <ul className="space-y-3 text-white/80">
-              <li className="flex gap-3"><Icon name="MapPin" className="w-4 h-4 mt-1 shrink-0 text-teal" /><a href={clinic.directions} target="_blank" rel="noopener noreferrer" className="link-u">{clinic.address}</a></li>
-              <li className="flex gap-3"><Icon name="Phone" className="w-4 h-4 mt-1 shrink-0 text-sky" /><a href={clinic.tel} className="link-u">{clinic.phone}</a></li>
-              <li className="flex gap-3"><Icon name="Mail" className="w-4 h-4 mt-1 shrink-0 text-coral" /><a href={`mailto:${clinic.email}`} className="link-u break-words">{clinic.email}</a></li>
-              <li className="flex gap-3"><Icon name="Clock" className="w-4 h-4 mt-1 shrink-0 text-sun" /><span>{clinic.hours}</span></li>
+              <li className="flex gap-3"><Icon name="MapPin" className="w-4 h-4 mt-1 shrink-0 text-(--acc-light)" /><a href={clinic.directions} target="_blank" rel="noopener noreferrer" className="link-u">{clinic.address}</a></li>
+              <li className="flex gap-3"><Icon name="Phone" className="w-4 h-4 mt-1 shrink-0 text-(--acc-light)" /><a href={clinic.tel} className="link-u">{clinic.phone}</a></li>
+              <li className="flex gap-3"><Icon name="Mail" className="w-4 h-4 mt-1 shrink-0 text-(--acc-light)" /><a href={`mailto:${clinic.email}`} className="link-u break-words">{clinic.email}</a></li>
+              <li className="flex gap-3"><Icon name="Clock" className="w-4 h-4 mt-1 shrink-0 text-(--acc-light)" /><span>{clinic.hours}</span></li>
             </ul>
           </div>
         </div>
