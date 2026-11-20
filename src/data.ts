@@ -75,6 +75,8 @@ export type Dept = {
   servicesSub: string;
   services: { t: string; d: string; i: string; img: string }[];
   doctor: Doctor;
+  // Consulting doctors who also see patients in this department (shown under the main doctor).
+  consultants?: Consultant[];
   expTitle: string;
   expText: string;
   exp: { t: string; d: string; i: string }[];
@@ -214,3 +216,60 @@ export const clinicProfile = {
 
 // The two doctors shown on the home page (their details live on each department above).
 export const doctors: Dept[] = [heart, dental];
+
+// Consulting doctors shown under the two main doctors on the home page.
+// Photos live in /public/images. Dr. Shambhu's file is a placeholder: replace doctor-shambhu.jpg with his portrait.
+export type Consultant = {
+  name: string;
+  role: string;
+  creds: string;
+  exp?: string;
+  points: string[];
+  image: string;
+  imgPos?: string; // focus point of the photo, e.g. '50% 0%'
+};
+
+export const consultants: Consultant[] = [
+  {
+    name: 'Dr. Preetha Peethambar',
+    role: 'Pediatric Dentist',
+    creds: 'MDS, Pediatric Dentistry',
+    exp: 'Former Professor',
+    points: [
+      'MDS, A.B. Shetty Memorial Institute of Dental Sciences, Mangalore (2007)',
+      'Dental care for children, including children with special healthcare needs',
+      'Trained in sedation in pediatric dentistry (2024)',
+    ],
+    image: '/images/doctor-preetha.jpg',
+    imgPos: '50% 10%',
+  },
+  {
+    name: 'Dr. Shambhu H. Shivanna',
+    role: 'Prosthodontist & Implantologist',
+    creds: 'BDS, MDS (Prosthodontics & Implantology)',
+    exp: '10+ years placing implants',
+    points: [
+      'MDS, JSS Dental College, Mysore (2007)',
+      'Complex implant work, including sinus grafting and ridge expansion',
+      'Digital smile design, crowns, bridges and dentures',
+    ],
+    image: '/images/doctor-shambhu.jpg',
+    imgPos: '50% 0%',
+  },
+  {
+    name: 'Dr. Sri Gowri M',
+    role: 'Oral & Maxillofacial Surgeon',
+    creds: 'MDS, FIBOMS',
+    exp: '10 years of experience',
+    points: [
+      'Dental implants, facial trauma and minor oral surgery',
+      'Oral pathology, cysts, TMJ disorders and oral cancer screening',
+      'Experience treating medically compromised and cardiac patients',
+    ],
+    image: '/images/doctor-srigowri.jpg',
+    imgPos: '50% 0%',
+  },
+];
+
+// All three consultants are dental specialists, so they also appear on the Dental Care page.
+dental.consultants = consultants;

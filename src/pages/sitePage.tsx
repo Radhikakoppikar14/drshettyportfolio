@@ -2,13 +2,16 @@ import { useState } from 'react';
 import AboutSection from '../components/Aboutsection.tsx';
 import AppointmentCTA from '../components/Appointmentcta.tsx';
 import Booking from '../components/Booking.tsx';
+import ConsultantCard from '../components/ConsultantCard.tsx';
 import ContactSection from '../components/Contactsection.tsx';
 import DoctorProfile from '../components/Doctorprofile.tsx';
 import Footer from '../components/Footer.tsx';
 import Header from '../components/Header.tsx';
+import Eyebrow from '../components/Eyebrow.tsx';
 import HeroSection, { HeroMeta } from '../components/Herosection.tsx';
 import Img from '../components/Img.tsx';
 import MobileBar from '../components/MobileBar.tsx';
+import Reveal from '../components/Reveal.tsx';
 import PatientExperience from '../components/Patientexperience.tsx';
 import Statement from '../components/Statement.tsx';
 import TreatmentsSection from '../components/Treatmentssection.tsx';
@@ -77,6 +80,19 @@ export default function SitePage({ d }: { d: Dept }) {
         />
         <TreatmentsSection d={d} onLearn={(t: string) => book(t)} />
         <DoctorProfile doctor={d.doctor} onBook={() => book()} />
+        {d.consultants && d.consultants.length > 0 && (
+          <section id="consultants" className="pb-8 sm:pb-10 lg:pb-12 bg-paper">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="mb-8">
+                <Reveal><Eyebrow>Consulting doctors</Eyebrow></Reveal>
+                <Reveal delay={80}><p className="mt-4 text-muted text-base sm:text-[17px] max-w-2xl">More specialists who consult at the clinic for {d.label.toLowerCase()}.</p></Reveal>
+              </div>
+              <div className="grid lg:grid-cols-2 gap-5 lg:[&>*:last-child:nth-child(odd)]:col-span-2 lg:[&>*:last-child:nth-child(odd)]:justify-self-center lg:[&>*:last-child:nth-child(odd)]:w-[calc(50%-0.625rem)]">
+                {d.consultants.map((c, n) => <ConsultantCard key={c.name} c={c} n={n} onBook={() => book(`${d.label} consultation`)} />)}
+              </div>
+            </div>
+          </section>
+        )}
         <PatientExperience d={d} />
         <Statement lines={isHeart ? ['Caring for your heart.', 'At every step.'] : ['Caring for your smile.', 'At every step.']} />
         <AppointmentCTA title={d.ctaTitle} text={d.ctaText} onBook={() => book()} image={isHeart ? img.consult : img.reception} dept={d.key} />

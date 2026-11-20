@@ -4,6 +4,7 @@ import AppointmentCTA from '../components/Appointmentcta.tsx';
 import Booking from '../components/Booking.tsx';
 import Button from '../components/Button.tsx';
 import CareSection from '../components/CareSection.tsx';
+import ConsultantCard from '../components/ConsultantCard.tsx';
 import ContactSection from '../components/Contactsection.tsx';
 import Eyebrow from '../components/Eyebrow.tsx';
 import Footer from '../components/Footer.tsx';
@@ -16,7 +17,7 @@ import PatientExperience from '../components/Patientexperience.tsx';
 import Statement from '../components/Statement.tsx';
 import Reveal from '../components/Reveal.tsx';
 import TrustHighlights from '../components/Trusthighlights.tsx';
-import { clinic, clinicProfile, dental, doctors, heart, homeExp, img, type Dept } from '../data.ts';
+import { clinic, clinicProfile, consultants, dental, doctors, heart, homeExp, img, type Dept } from '../data.ts';
 import { hrefFor } from '../router.ts';
 import { scrollToId } from '../scroll.ts';
 
@@ -152,6 +153,13 @@ export default function Home() {
             </div>
             <div className="grid lg:grid-cols-2 gap-5">
               {doctors.map((d, n) => <DoctorCard key={d.key} d={d} n={n} onBook={book} />)}
+            </div>
+            <div className="mt-12 mb-6">
+              <Reveal><p className="text-[13px] font-semibold uppercase tracking-[0.16em] t-acc">Consulting doctors</p></Reveal>
+              <Reveal delay={80}><p className="mt-2 text-muted text-base max-w-2xl">Three more specialists consult at the clinic, covering children's dentistry, implants and oral surgery.</p></Reveal>
+            </div>
+            <div className="grid lg:grid-cols-2 gap-5 lg:[&>*:last-child:nth-child(odd)]:col-span-2 lg:[&>*:last-child:nth-child(odd)]:justify-self-center lg:[&>*:last-child:nth-child(odd)]:w-[calc(50%-0.625rem)]">
+              {consultants.map((c, n) => <ConsultantCard key={c.name} c={c} n={n} onBook={book} />)}
             </div>
           </div>
         </section>
