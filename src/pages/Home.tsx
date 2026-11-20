@@ -147,7 +147,7 @@ export default function Home() {
             <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 mb-8">
               <div className="min-w-0">
                 <Reveal><Eyebrow>Meet our doctors</Eyebrow></Reveal>
-                <Reveal delay={80}><h2 className="mt-5 text-4xl sm:text-5xl lg:text-[clamp(2.4rem,3.6vw,3.6rem)] lg:whitespace-nowrap text-ink">Two specialists. <span className="gt-light">One caring team.</span></h2></Reveal>
+                <Reveal delay={80}><h2 className="mt-5 text-4xl sm:text-5xl lg:text-[clamp(2.4rem,3.6vw,3.6rem)] lg:whitespace-nowrap text-ink">Two Specialities. <span className="gt-light">One caring team.</span></h2></Reveal>
               </div>
               <Reveal delay={160}><Button onClick={() => book()} variant="outline" arrow>Book a Consultation</Button></Reveal>
             </div>

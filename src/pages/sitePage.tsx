@@ -61,6 +61,7 @@ export default function SitePage({ d }: { d: Dept }) {
           imageAlt={`${d.label} at Svasti Heart and Dental Care`}
           cta1={['Book Appointment', () => book()]}
           cta2={[isHeart ? 'Explore Our Services' : 'Explore Our Treatments', () => scrollToId('services')]}
+          cta3={isHeart ? ['Visit our Cardio Care Website', 'https://drsreekanthshetty.com/'] : undefined}
           side={<DoctorHeroCard d={d} />}
           meta={<HeroMeta items={[{ i: 'Clock', t: clinic.hours }, { i: 'Phone', t: clinic.phone }]} />}
         />

@@ -13,13 +13,14 @@ type P = {
   card?: string;
   cta1: [string, () => void];
   cta2: [string, () => void];
+  cta3?: [string, string]; // optional third button that opens an outside website: [label, url]
   side?: React.ReactNode; // right-hand column (image collage / doctor card)
   meta?: React.ReactNode; // small row under the buttons
   next?: string; // (unused) kept so existing callers still compile
 };
 
 // Full-bleed photographic hero: image + dark veil + drifting colour aura, staggered text entrance.
-export default function HeroSection({ eyebrow, tags, headline, sub, image, imageAlt = 'Svasti Heart and Dental Care clinic', cta1, cta2, side, meta }: P) {
+export default function HeroSection({ eyebrow, tags, headline, sub, image, imageAlt = 'Svasti Heart and Dental Care clinic', cta1, cta2, cta3, side, meta }: P) {
   const bg = useParallax<HTMLDivElement>(0.12);
   return (
     <section id="top" className="relative isolate overflow-hidden bg-dark text-white min-h-[70svh] lg:min-h-[70vh] flex">
@@ -58,9 +59,10 @@ export default function HeroSection({ eyebrow, tags, headline, sub, image, image
             <span className="hin d3 block gt">{headline[1]}</span>
           </h1>
           <p className="hin d4 mt-6 sm:mt-7 text-base sm:text-lg text-white/75 max-w-xl leading-relaxed">{sub}</p>
-          <div className="hin d5 mt-9 flex flex-col sm:flex-row gap-3.5">
+          <div className="hin d5 mt-9 flex flex-col sm:flex-row sm:flex-wrap gap-3.5">
             <Button onClick={cta1[1]} arrow icon="CalendarCheck">{cta1[0]}</Button>
             <Button onClick={cta2[1]} variant="ghost">{cta2[0]}</Button>
+            {cta3 && <Button href={cta3[1]} external arrow variant="light">{cta3[0]}</Button>}
           </div>
           {meta && <div className="hin d6 mt-10">{meta}</div>}
         </div>
