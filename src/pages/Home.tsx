@@ -155,8 +155,8 @@ export default function Home() {
               {doctors.map((d, n) => <DoctorCard key={d.key} d={d} n={n} onBook={book} />)}
             </div>
             <div className="mt-12 mb-6">
-              <Reveal><p className="text-[13px] font-semibold uppercase tracking-[0.16em] t-acc">Consulting doctors</p></Reveal>
-              <Reveal delay={80}><p className="mt-2 text-muted text-base max-w-2xl">Three more specialists consult at the clinic, covering children's dentistry, implants and oral surgery.</p></Reveal>
+              <Reveal><h3 className="text-3xl sm:text-4xl lg:text-[2.6rem] text-ink">Consulting <span className="t-acc">doctors</span></h3></Reveal>
+              <Reveal delay={80}><p className="mt-3 text-muted text-lg sm:text-xl leading-relaxed max-w-3xl">Three more specialists consult at the clinic, covering children's dentistry, implants and oral surgery.</p></Reveal>
             </div>
             <div className="grid lg:grid-cols-2 gap-5 lg:[&>*:last-child:nth-child(odd)]:col-span-2 lg:[&>*:last-child:nth-child(odd)]:justify-self-center lg:[&>*:last-child:nth-child(odd)]:w-[calc(50%-0.625rem)]">
               {consultants.map((c, n) => <ConsultantCard key={c.name} c={c} n={n} onBook={book} />)}
