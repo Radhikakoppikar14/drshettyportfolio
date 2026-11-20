@@ -58,9 +58,8 @@ function ProfileModal({ c, theme, onClose, onBook }: { c: Consultant; theme: str
               </div>
             ))}
           </div>
-          <div className="px-6 sm:px-9 py-4 border-t border-line bg-white flex flex-wrap items-center justify-between gap-3">
+          <div className="px-6 sm:px-9 py-4 border-t border-line bg-white">
             <Button onClick={onBook} arrow icon="CalendarCheck">Book a visit</Button>
-            <button type="button" onClick={onClose} className="h-11 px-4 text-sm font-semibold text-muted hover:text-ink">Close</button>
           </div>
         </div>
       </div>
