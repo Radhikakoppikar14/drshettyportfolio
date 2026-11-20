@@ -83,8 +83,8 @@ export default function SitePage({ d }: { d: Dept }) {
           <section id="consultants" className="pb-8 sm:pb-10 lg:pb-12 bg-paper">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="mb-8">
-                <Reveal><h3 className="text-3xl sm:text-4xl lg:text-[2.6rem] text-ink">Consulting <span className="t-acc">doctors</span></h3></Reveal>
-                <Reveal delay={80}><p className="mt-3 text-muted text-lg sm:text-xl leading-relaxed max-w-3xl">More specialists who consult at the clinic for {d.label.toLowerCase()}.</p></Reveal>
+                <Reveal><h3 className="text-4xl sm:text-5xl lg:text-[3.6rem] text-ink">Consulting <span className="t-acc">doctors</span></h3></Reveal>
+                <Reveal delay={80}><p className="mt-4 text-muted text-xl sm:text-2xl leading-relaxed max-w-4xl">More specialists who consult at the clinic for {d.label.toLowerCase()}.</p></Reveal>
               </div>
               <div className="grid lg:grid-cols-2 gap-5 lg:[&>*:last-child:nth-child(odd)]:col-span-2 lg:[&>*:last-child:nth-child(odd)]:justify-self-center lg:[&>*:last-child:nth-child(odd)]:w-[calc(50%-0.625rem)]">
                 {d.consultants.map((c, n) => <ConsultantCard key={c.name} c={c} n={n} onBook={() => book(`${d.label} consultation`)} />)}
