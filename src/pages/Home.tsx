@@ -156,7 +156,7 @@ export default function Home() {
             </div>
             <div className="mt-12 mb-6">
               <Reveal><h3 className="text-4xl sm:text-5xl lg:text-[3.6rem] text-ink">Consulting <span className="t-acc">doctors</span></h3></Reveal>
-              <Reveal delay={80}><p className="mt-4 text-muted text-xl sm:text-2xl leading-relaxed max-w-4xl">Four more specialists consult at the clinic, covering children's dentistry, braces and aligners, implants and oral surgery.</p></Reveal>
+              <Reveal delay={80}><p className="mt-4 text-muted text-xl sm:text-2xl leading-relaxed max-w-4xl">Five more specialists consult at the clinic, covering children's dentistry, braces and aligners, gum care, implants and oral surgery.</p></Reveal>
             </div>
             <div className="grid lg:grid-cols-2 gap-5 lg:[&>*:last-child:nth-child(odd)]:col-span-2 lg:[&>*:last-child:nth-child(odd)]:justify-self-center lg:[&>*:last-child:nth-child(odd)]:w-[calc(50%-0.625rem)]">
               {consultants.map((c, n) => <ConsultantCard key={c.name} c={c} n={n} onBook={book} />)}

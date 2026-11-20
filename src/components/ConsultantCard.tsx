@@ -44,7 +44,9 @@ function ProfileModal({ c, theme, onClose, onBook }: { c: Consultant; theme: str
             </div>
             {c.bio && c.bio.length > 0 && (
               <div className="mt-6 space-y-4 text-[15px] sm:text-base text-muted leading-relaxed">
-                {c.bio.map((p) => <p key={p}>{p}</p>)}
+                {c.bio.map((p) => p.startsWith('## ')
+                  ? <h4 key={p} className="pt-2 font-display text-lg font-semibold text-ink">{p.slice(3)}</h4>
+                  : <p key={p}>{p}</p>)}
               </div>
             )}
             {c.details?.map((s) => (

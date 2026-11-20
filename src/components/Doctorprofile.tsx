@@ -36,7 +36,7 @@ export default function DoctorProfile({ doctor, onBook, tag }: { doctor: Doctor;
               ))}
             </div>
           </Reveal>
-          <Reveal delay={220}><p className="mt-6 text-muted leading-relaxed text-base sm:text-[17px]">{doctor.bio}</p></Reveal>
+          <Reveal delay={220}><div className="mt-6 space-y-4 text-muted leading-relaxed text-base sm:text-[17px]"><p>{doctor.bio}</p>{doctor.more?.map((t) => <p key={t}>{t}</p>)}</div></Reveal>
           <ul className="mt-7 grid sm:grid-cols-2 gap-3">
             {doctor.points.map((p, n) => (
               <Reveal as="li" key={p} delay={260 + n * 80}>

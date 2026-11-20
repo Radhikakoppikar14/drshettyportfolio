@@ -52,6 +52,7 @@ export type Doctor = {
   creds: string; // qualifications
   exp: string; // years of experience
   bio: string;
+  more?: string[]; // extra bio paragraphs shown under bio on the department page
   points: string[];
   image: string;
   // Optional focus point of the photo inside its frame (CSS object-position), e.g. '50% 0%' = keep the top of the head.
@@ -115,13 +116,19 @@ export const dental: Dept = {
     name: 'Dr. Chitra S. Shetty',
     role: 'Dental Surgeon',
     creds: 'BDS',
-    exp: 'About 25 years of experience',
-    bio: 'Dr. Chitra S. Shetty is a dental surgeon practising at Svasti Heart and Dental Care in HSR Layout, with about 25 years of experience. Her approach to dentistry starts with listening: every visit is built around your comfort, with clear explanations of your options before any treatment begins.',
+    exp: '24 years of experience',
+    bio: 'Dr. Chitra Shetty is a highly accomplished general dentist with 24 years of clinical excellence and a deep commitment to comprehensive oral healthcare. She trained at the prestigious A.B. Shetty College of Dental Sciences, Mangalore. As the founder and lead dentist of Svasti Heart and Dental Care, she skillfully manages every aspect of the practice, from diagnosis and treatment planning to patient experience and operational excellence, while maintaining the highest standards of care.',
+    more: [
+      'Before starting Svasti, Dr. Chitra Shetty gained expertise while working at Mallya Hospital and Sakra World Hospital.',
+      'Her clinical expertise spans broad areas of preventive, restorative, and aesthetic dentistry. She has a strong foundation in evidence-based dentistry and seamlessly integrates advanced techniques and technology to deliver precise, long-lasting results.',
+      'What sets her practice apart is her collaborative model. She has carefully assembled a network of highly skilled visiting specialists across all dental subspecialties, including orthodontics, endodontics, periodontics, oral and maxillofacial surgery, implantology, and pediatric dentistry. This allows her to offer truly comprehensive care under one roof while remaining the central coordinating clinician who ensures continuity and personalized attention for every patient.',
+      'Known for her calm demeanor, clear communication, and genuine empathy, Dr. Chitra Shetty has earned the trust of her patients. She combines technical mastery with a warm, patient-centric approach, making even complex dental journeys comfortable and reassuring.',
+    ],
     points: [
-      'BDS, A.B. Shetty Memorial Institute of Dental Sciences (2002)',
-      'General dentistry, dental crowns and root canal treatment (RCT)',
-      'Dental braces fixing and TMJ therapy',
-      'Focus on comfort and long-term oral health',
+      'BDS, A.B. Shetty Memorial Institute of Dental Sciences, Mangalore (2002)',
+      'Previously at Mallya Hospital and Sakra World Hospital',
+      'Preventive, restorative and aesthetic dentistry',
+      'Founder and lead dentist, working with a network of visiting specialists',
     ],
     image: img.doctorDental,
     imgPos: '50% 0%',
@@ -225,7 +232,7 @@ export type Consultant = {
   creds: string;
   exp?: string;
   points: string[]; // short highlights shown on the card
-  bio?: string[]; // full profile text, one string per paragraph (shown under "Full profile")
+  bio?: string[]; // full profile text, one string per paragraph (a string starting with '## ' becomes a sub-heading)
   details?: { title: string; items: string[] }[]; // lists such as Education, Memberships, Courses
   image: string;
   imgPos?: string; // focus point of the photo, e.g. '50% 0%'
@@ -346,6 +353,30 @@ export const consultants: Consultant[] = [
     ],
     image: '/images/doctor-prashantha.jpg',
     imgPos: '50% 10%',
+  },
+  {
+    name: 'Dr. Rajesh A',
+    role: 'Periodontist & Implantologist',
+    creds: 'MDS (Periodontics), BDS',
+    exp: '18+ years of experience',
+    points: [
+      'MDS in Periodontics, Saveetha Dental College, Chennai (2008)',
+      'Laser periodontal therapy and conventional surgical gum therapy',
+      'Consultant for over a decade at Narayana Health and Axis Dental',
+    ],
+    bio: [
+      'MDS (Periodontics) | BDS | Laser Specialist',
+      'Dr. Rajesh is a distinguished Periodontist and Implantologist with over 18 years of specialized experience in gum care and oral rehabilitation.',
+      '## A Foundation of Excellence',
+      'Dr. Rajesh began his dental journey at the renowned College of Dental Sciences, Davangere, graduating in 2004. He went on to pursue a Master\u2019s in Periodontics at the prestigious Saveetha Dental College, Chennai, completing the program in 2008. This rigorous academic background laid the groundwork for a career defined by clinical precision and patient-focused care.',
+      '## Experience & Expertise',
+      'Before establishing Shree Dental Square, Dr. Rajesh served as a consultant for over a decade at leading healthcare institutions, including Narayana Health and Axis Dental.',
+      '## Philosophy: The Right Treatment at the Right Time',
+      'Dr. Rajesh is one of the few specialists who advocates for a balanced approach to gum health. While highly skilled in modern Laser Periodontal Therapy for painless, minimally invasive treatment, he also possesses deep expertise in Conventional Surgical Therapy.',
+      'Dr. Rajesh believes that technology should support, not replace, clinical judgment. He carefully evaluates every case to determine whether a patient needs the gentle touch of a laser or the structural correction of traditional surgery\u2014ensuring the most effective, long-lasting results for every smile.',
+    ],
+    image: '/images/doctor-rajesh.jpg',
+    imgPos: '50% 5%',
   },
 ];
 
