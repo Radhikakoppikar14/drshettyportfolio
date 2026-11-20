@@ -224,7 +224,9 @@ export type Consultant = {
   role: string;
   creds: string;
   exp?: string;
-  points: string[];
+  points: string[]; // short highlights shown on the card
+  bio?: string[]; // full profile text, one string per paragraph (shown under "Full profile")
+  details?: { title: string; items: string[] }[]; // lists such as Education, Memberships, Courses
   image: string;
   imgPos?: string; // focus point of the photo, e.g. '50% 0%'
 };
@@ -236,40 +238,116 @@ export const consultants: Consultant[] = [
     creds: 'MDS, Pediatric Dentistry',
     exp: 'Former Professor',
     points: [
-      'MDS, A.B. Shetty Memorial Institute of Dental Sciences, Mangalore (2007)',
+      'MDS in Pediatric Dentistry, A.B. Shetty Memorial Institute of Dental Sciences, Mangalore (2007)',
       'Dental care for children, including children with special healthcare needs',
-      'Trained in sedation in pediatric dentistry (2024)',
+      'Served as Professor in Pediatric Dentistry, guiding undergraduate and postgraduate students',
+    ],
+    bio: [
+      'Dr. Preetha Peethambar holds a specialization in Pediatric Dentistry from A.B. Shetty Memorial Institute of Dental Sciences, under Rajiv Gandhi University of Health Sciences, Bangalore. She is a compassionate and dedicated oral healthcare provider committed to promoting children\u2019s dental health, including care for children with special healthcare needs.',
+      'With extensive academic experience, she has served as a Professor in Pediatric Dentistry and has successfully guided and mentored numerous undergraduate and postgraduate students in the field.',
+      'Has published several scientific papers in the field of Pediatric Dentistry in reputed national and international dental journals.',
+    ],
+    details: [
+      { title: 'Education', items: [
+        '2004\u20132007: Master of Dental Surgery (MDS), AB Shetty Memorial Institute of Dental Sciences, Mangalore, India',
+        '1997\u20132001: Bachelors of Dental Surgery (BDS), AB Shetty Memorial Institute of Dental Sciences, Mangalore, India',
+      ] },
+      { title: 'Professional memberships', items: ['Indian Dental Association', 'Indian Society of Pediatric and Preventive Dentistry'] },
+      { title: 'Certificate courses', items: [
+        'Sedation in Pediatric Dentistry (2024)',
+        'Mastering Cosmetic Pediatric Crowns (2018)',
+        'Mini residency in Interceptive / Myofunctional Orthodontics (2017)',
+        'Pedopathshala: intensive training in Clinical Pediatric Dentistry (2012)',
+      ] },
     ],
     image: '/images/doctor-preetha.jpg',
     imgPos: '50% 10%',
   },
   {
     name: 'Dr. Shambhu H. Shivanna',
-    role: 'Prosthodontist & Implantologist',
+    role: 'Maxillofacial Prosthodontist, Implantologist & Cosmetic Dentist',
     creds: 'BDS, MDS (Prosthodontics & Implantology)',
     exp: '10+ years placing implants',
     points: [
-      'MDS, JSS Dental College, Mysore (2007)',
-      'Complex implant work, including sinus grafting and ridge expansion',
+      'MDS in Prosthodontics & Implantology, JSS Dental College, Mysore (2007)',
+      'Complex implant work, including sinus grafting, ridge expansion and nerve repositioning',
       'Digital smile design, crowns, bridges and dentures',
+    ],
+    bio: [
+      'Dr. Shambhu H. Shivanna is a consultant Prosthodontist and Implantologist. He has worked at Narayana Hrudayalaya hospitals and Axiss Dental, and is currently associated with Curaden Dental clinic (formerly Swiss Smile) and more than 25 clinics in Bangalore.',
+      'He has more than a decade of experience placing implants, including complex procedures such as sinus grafting, ridge expansion and nerve repositioning. He has rehabilitated patients who lost jaw bone or teeth to tumours, accidents or falls, and routinely does major maxillofacial and cosmetic prosthetic work for patients with facial defects.',
+      'He has published several national and international scientific papers.',
+    ],
+    details: [
+      { title: 'Education and training', items: [
+        'BDS, Bapuji College of Dental Sciences, Davangere (2000)',
+        'MDS in Prosthodontics & Implantology, JSS Dental College, Mysore (2007)',
+        'Advanced training in digital smile design under Dr. Eduardo, Spain',
+      ] },
+      { title: 'Professional memberships', items: ['International Congress of Oral Implantologists (ICOI)', 'Indian Society of Oral Implantologists (ISOI)'] },
+      { title: 'Areas of expertise', items: [
+        'Prosthodontics and implantology, including crowns, bridges and dentures',
+        'Advanced implantology, including immediate and delayed placements',
+        'Digital smile design',
+        'Basal implantology for immediate tooth replacement',
+        'Maxillofacial and cosmetic prosthesis',
+        'Geriatric dental care, including removable, complete and fixed prostheses',
+        'Complex rehabilitation for patients with severe bone loss',
+      ] },
     ],
     image: '/images/doctor-shambhu.jpg',
     imgPos: '50% 0%',
   },
   {
     name: 'Dr. Sri Gowri M',
-    role: 'Oral & Maxillofacial Surgeon',
+    role: 'Consultant Oral & Maxillofacial Surgeon & Implantologist',
     creds: 'MDS, FIBOMS',
     exp: '10 years of experience',
     points: [
-      'Dental implants, facial trauma and minor oral surgery',
-      'Oral pathology, cysts, TMJ disorders and oral cancer screening',
-      'Experience treating medically compromised and cardiac patients',
+      'Dental implants, facial trauma and minor oral surgical procedures',
+      'Oral pathology, cysts and soft tissue lesions, TMJ disorders, oral cancer screening',
+      'Experienced in treating medically compromised and cardiac patients',
+    ],
+    bio: [
+      'Dr. Sri Gowri M is an experienced Oral and Maxillofacial Surgeon with 10 years of clinical expertise in managing a wide range of oral, facial, and maxillofacial conditions. She specializes in facial trauma, oral pathology, dental implants, facial aesthetics, and minor oral surgical procedures, with a patient-centered approach focused on safety and precision.',
+      'With extensive experience in hospital-based practice, she is proficient in the management of medically compromised patients, including those with cardiovascular diseases and heart conditions, ensuring comprehensive and coordinated surgical care. She works closely with multidisciplinary teams to provide safe treatment for high-risk patients.',
+      'Dr. Sri Gowri is committed to delivering evidence-based, compassionate care while ensuring the highest standards of patient safety and clinical excellence.',
+    ],
+    details: [
+      { title: 'Areas of expertise', items: [
+        'Oral and Maxillofacial Surgery',
+        'Dental Implantology',
+        'Facial Trauma Management',
+        'Minor Oral Surgical Procedures',
+        'Management of Oral Cysts and Soft Tissue Lesions',
+        'TMJ Disorders',
+        'Facial Aesthetic Procedures',
+        'Management of Medically Compromised & Cardiac Patients',
+        'Oral Cancer Screening and Prevention and Treatment including Reconstruction',
+      ] },
     ],
     image: '/images/doctor-srigowri.jpg',
     imgPos: '50% 0%',
   },
+  {
+    name: 'Dr. Prashantha GS',
+    role: 'Orthodontist & Invisible Braces Specialist',
+    creds: 'M.Ortho RCS (Edinburgh)',
+    exp: '20+ years of experience',
+    points: [
+      'M.Ortho RCS, Royal College of Surgeons of Edinburgh, UK (2005)',
+      'Professor and Head, Clinical Orthodontics, M S Ramaiah University of Applied Sciences, Bangalore',
+      'Certified in invisible orthodontics (clear aligners)',
+    ],
+    bio: [
+      'Dr Prashantha GS is the Clinical Director and Specialist Orthodontist at Ivory Dental in Bangalore. Dr Prashantha GS has consistently excelled in his academic career and is currently the Professor and Head in the Clinical Orthodontics department at the premiere M S Ramaiah University of Applied Sciences, Bangalore. He has completed M Ortho RCS from the Royal College of Surgeons Edinburgh, UK in 2005. He has also excelled during his under graduate and post graduate training from one of the premier institutes of the country Bapuji Dental College and Hospital.',
+      'Dr Prashantha GS is an excellent clinician and is extremely popular among his patients. He has conducted several hands on courses on MBT treatment mechanics and surgical Orthodontics. He is specially trained and certified in Invisible orthodontics / clear aligners.',
+      'Dr. Prashantha GS is extremely passionate about his patients and giving them the smile they deserve. His compassion and genuine affection for his patients doesn\u2019t go unnoticed. He has over 20 years of experience in orthodontics treating over hundreds of patients to their satisfaction.',
+    ],
+    image: '/images/doctor-prashantha.jpg',
+    imgPos: '50% 10%',
+  },
 ];
 
-// All three consultants are dental specialists, so they also appear on the Dental Care page.
+// All are dental specialists, so they also appear on the Dental Care page.
 dental.consultants = consultants;
