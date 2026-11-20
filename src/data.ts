@@ -117,10 +117,10 @@ export const dental: Dept = {
     role: 'Dental Surgeon',
     creds: 'BDS',
     exp: '24 years of experience',
-    bio: 'Dr. Chitra Shetty is a highly accomplished general dentist with 24 years of clinical excellence and a deep commitment to comprehensive oral healthcare. She trained at the prestigious A.B. Shetty College of Dental Sciences, Mangalore. As the founder and lead dentist of Svasti Heart and Dental Care, she skillfully manages every aspect of the practice, from diagnosis and treatment planning to patient experience and operational excellence, while maintaining the highest standards of care.',
+    bio: 'Dr. Chitra Shetty is a highly accomplished general dentist with 24 years of clinical excellence and a deep commitment to comprehensive oral healthcare. She trained at the prestigious A.B. Shetty College of Dental Sciences, Mangalore. As the founder and lead dentist of Svasti Heart and dental clinic, she skillfully manages every aspect of the practice\u2014from diagnosis and treatment planning to patient experience and operational excellence\u2014while maintaining the highest standards of care.',
     more: [
-      'Before starting Svasti, Dr. Chitra Shetty gained expertise while working at Mallya Hospital and Sakra World Hospital.',
-      'Her clinical expertise spans broad areas of preventive, restorative, and aesthetic dentistry. She has a strong foundation in evidence-based dentistry and seamlessly integrates advanced techniques and technology to deliver precise, long-lasting results.',
+      'Before starting Svasti, Dr Chitra Shetty gained expertise while working at Mallya Hospital and Sakra World Hospital.',
+      'Her clinical expertise spans broad areas of preventive, restorative, and aesthetic dentistry. She has a strong foundation in evidence-based dentistry and helps seamlessly integrate advanced techniques and technology to deliver precise, long-lasting results.',
       'What sets her practice apart is her collaborative model. She has carefully assembled a network of highly skilled visiting specialists across all dental subspecialties, including orthodontics, endodontics, periodontics, oral and maxillofacial surgery, implantology, and pediatric dentistry. This allows her to offer truly comprehensive care under one roof while remaining the central coordinating clinician who ensures continuity and personalized attention for every patient.',
       'Known for her calm demeanor, clear communication, and genuine empathy, Dr. Chitra Shetty has earned the trust of her patients. She combines technical mastery with a warm, patient-centric approach, making even complex dental journeys comfortable and reassuring.',
     ],
